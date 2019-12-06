@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a753d01f972b08f22048acf60164cbc",
+    "content-hash": "e5be215e94e3ca4b115eafec666b4dbe",
     "packages": [
         {
             "name": "drupol/psrcas",
