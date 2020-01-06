@@ -14,15 +14,15 @@
         "drupol/psrcas": "dev-master"
     },
     "require-dev": {
-        "drupol/php-conventions": "^1.6.8",
-        "friends-of-phpspec/phpspec-code-coverage": "^4.3",
-        "infection/infection": "^0.12.2 || ^0.13.6 || ^0.14.4 || ^0.15.0",
+        "drupol/php-conventions": "^1.6.11",
+        "friends-of-phpspec/phpspec-code-coverage": "^4.3.2",
+        "infection/infection": "^0.13.6",
         "monolog/monolog": "^1.0",
         "nyholm/psr7": "^1.2.1",
         "nyholm/psr7-server": "^0.4.1",
-        "phpspec/phpspec": "^5.1.2 || ^6.1",
+        "phpspec/phpspec": "^5.1.2",
         "phpstan/phpstan-strict-rules": "^0.12",
-        "symfony/cache": "^4.3 || ^4.4",
+        "symfony/cache": "^4.4",
         "symfony/http-client": "^4.4"
     },
     "autoload": {
@@ -39,7 +39,6 @@
     "scripts": {
         "grumphp": "./vendor/bin/grumphp run",
         "phpinsights": "./vendor/bin/phpinsights analyse src/",
-        "phpspec": "./vendor/bin/phpspec run",
-        "scrutinizer": "./vendor/bin/ocular code-coverage:upload --format=php-clover build/logs/clover.xml"
+        "phpspec": "./vendor/bin/phpspec run"
     }
 }
