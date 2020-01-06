@@ -84,10 +84,6 @@ class EcasSpec extends ObjectBehavior
             ->willReturn('pgtIou');
 
         $cache
-            ->hasItem('unknownPgtIou')
-            ->willReturn(false);
-
-        $cache
             ->save($cacheItemPgtIou)
             ->willReturn(true);
 
@@ -98,26 +94,6 @@ class EcasSpec extends ObjectBehavior
         $cache
             ->getItem('pgtIou')
             ->willReturn($cacheItemPgtIou);
-
-        $cache
-            ->hasItem('pgtIouWithPgtIdNull')
-            ->willReturn(true);
-
-        $cacheItemPgtIdNull
-            ->set(null)
-            ->willReturn($cacheItemPgtIdNull);
-
-        $cacheItemPgtIdNull
-            ->expiresAfter(300)
-            ->willReturn($cacheItemPgtIdNull);
-
-        $cacheItemPgtIdNull
-            ->get()
-            ->willReturn(null);
-
-        $cache
-            ->getItem('pgtIouWithPgtIdNull')
-            ->willReturn($cacheItemPgtIdNull);
 
         $this
             ->beConstructedWith($serverRequest, $properties, $client, $psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory, $cache, $logger);
