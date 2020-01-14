@@ -1,41 +1,29 @@
 {
-    "name": "drupol/ecas",
+    "name": "ecphp/ecas",
     "type": "library",
-    "description": "CAS library to communicate with eCAS/EULogin",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Pol Dellaiera",
-            "email": "pol.dellaiera@protonmail.com"
-        }
-    ],
+    "description": "CAS library to communicate with ECAS / EU Login",
+    "license": "BSD-3-Clause",
     "require": {
         "php": ">= 7.1.3",
-        "drupol/psrcas": "dev-master"
+        "ecphp/cas-lib": "^1"
     },
     "require-dev": {
-        "drupol/php-conventions": "^1.6.11",
+        "drupol/php-conventions": "^1.6.12",
         "friends-of-phpspec/phpspec-code-coverage": "^4.3.2",
-        "infection/infection": "^0.13.6",
+        "infection/infection": "^0.13.6 || ^0.15.0",
         "monolog/monolog": "^1.0",
         "nyholm/psr7": "^1.2.1",
         "nyholm/psr7-server": "^0.4.1",
-        "phpspec/phpspec": "^5.1.2",
+        "phpspec/phpspec": "^5.1.2 || ^6.1.1",
         "phpstan/phpstan-strict-rules": "^0.12",
-        "symfony/cache": "^4.4",
-        "symfony/http-client": "^4.4"
+        "symfony/cache": "^4.4 || ^5",
+        "symfony/http-client": "^4.4 || ^5"
     },
     "autoload": {
         "psr-4": {
-            "drupol\\ecas\\": "src/"
+            "EcPhp\\Ecas\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "spec\\drupol\\ecas\\": "./tests/"
-        }
-    },
-    "minimum-stability": "stable",
     "scripts": {
         "grumphp": "./vendor/bin/grumphp run",
         "phpinsights": "./vendor/bin/phpinsights analyse src/",

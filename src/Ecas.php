@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace drupol\ecas;
+namespace EcPhp\Ecas;
 
-use drupol\psrcas\Cas;
-use drupol\psrcas\CasInterface;
-use drupol\psrcas\Configuration\Properties;
-use drupol\psrcas\Configuration\PropertiesInterface;
+use EcPhp\CasLib\Cas;
+use EcPhp\CasLib\CasInterface;
+use EcPhp\CasLib\Configuration\Properties;
+use EcPhp\CasLib\Configuration\PropertiesInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -24,7 +24,7 @@ use Psr\Log\LoggerInterface;
 final class Ecas implements CasInterface
 {
     /**
-     * @var \drupol\psrcas\CasInterface
+     * @var \EcPhp\CasLib\CasInterface
      */
     private $cas;
 
@@ -37,7 +37,7 @@ final class Ecas implements CasInterface
      * Ecas constructor.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $serverRequest
-     * @param \drupol\psrcas\Configuration\PropertiesInterface $properties
+     * @param \EcPhp\CasLib\Configuration\PropertiesInterface $properties
      * @param \Psr\Http\Client\ClientInterface $client
      * @param \Psr\Http\Message\UriFactoryInterface $uriFactory
      * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory

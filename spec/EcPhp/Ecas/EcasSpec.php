@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace spec\drupol\ecas;
+namespace spec\EcPhp\Ecas;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\ServerRequest;
