@@ -130,7 +130,7 @@ final class Ecas implements CasInterface
     /**
      * {@inheritdoc}
      */
-    public function logout(array $parameters = []): ResponseInterface
+    public function logout(array $parameters = []): ?ResponseInterface
     {
         return $this->cas->logout($parameters);
     }
