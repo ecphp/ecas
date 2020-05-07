@@ -2,14 +2,6 @@ imports:
   - { resource: vendor/drupol/php-conventions/config/php71/grumphp.yml }
 
 parameters:
-  tasks.phpstan.ignore_patterns:
-    - vendor/
-    - spec/
-    - build/
-  tasks.phpcs.ignore_patterns:
-    - vendor/
-    - spec/
-    - build/
   extra_tasks:
     phpspec:
       verbose: true
