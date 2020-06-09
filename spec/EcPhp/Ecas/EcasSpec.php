@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace spec\EcPhp\Ecas;
 
+use EcPhp\CasLib\Cas;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\ServerRequest;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use PhpSpec\ObjectBehavior;
-use Psr\Cache\CacheItemInterface;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpClient\Psr18Client;
 
 require_once __DIR__ . '/CasHelper.php';
@@ -57,11 +57,8 @@ class EcasSpec extends ObjectBehavior
             ->shouldReturn(500);
     }
 
-    public function let(LoggerInterface $logger, CacheItemPoolInterface $cache, CacheItemInterface $cacheItemPgtIou, CacheItemInterface $cacheItemPgtIdNull)
+    public function let()
     {
-        $properties = CasHelper::getTestProperties();
-        $client = new Psr18Client(CasHelper::getHttpClientMock());
-
         $psr17Factory = new Psr17Factory();
         $creator = new ServerRequestCreator(
             $psr17Factory, // ServerRequestFactory
@@ -69,33 +66,19 @@ class EcasSpec extends ObjectBehavior
             $psr17Factory, // UploadedFileFactory
             $psr17Factory  // StreamFactory
         );
-        $serverRequest = $creator->fromGlobals();
 
-        $cacheItemPgtIou
-            ->set('pgtId')
-            ->willReturn($cacheItemPgtIou);
+        $cas = new Cas(
+            $creator->fromGlobals(),
+            CasHelper::getTestProperties(),
+            new Psr18Client(CasHelper::getHttpClientMock()),
+            $psr17Factory,
+            $psr17Factory,
+            $psr17Factory,
+            $psr17Factory,
+            new ArrayAdapter(),
+            new NullLogger()
+        );
 
-        $cacheItemPgtIou
-            ->expiresAfter(300)
-            ->willReturn($cacheItemPgtIou);
-
-        $cacheItemPgtIou
-            ->get()
-            ->willReturn('pgtIou');
-
-        $cache
-            ->save($cacheItemPgtIou)
-            ->willReturn(true);
-
-        $cache
-            ->hasItem('pgtIou')
-            ->willReturn(false);
-
-        $cache
-            ->getItem('pgtIou')
-            ->willReturn($cacheItemPgtIou);
-
-        $this
-            ->beConstructedWith($serverRequest, $properties, $client, $psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory, $cache, $logger);
+        $this->beConstructedWith($cas, $psr17Factory);
     }
 }
