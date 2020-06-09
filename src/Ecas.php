@@ -6,6 +6,7 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\CasInterface;
 use EcPhp\CasLib\Configuration\PropertiesInterface;
+use EcPhp\CasLib\Utils\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -137,6 +138,14 @@ final class Ecas implements CasInterface
 
         /** @var string $ticket */
         $ticket = preg_replace('/^cas_ticket /i', '', $ticketStr);
+
+        if ('' === $ticket) {
+            $ticket = Uri::getParam(
+                $this->serverRequest->getUri(),
+                'ticket',
+                ''
+            );
+        }
 
         $parameters += ['ticket' => $ticket];
 
