@@ -8,7 +8,7 @@
         "ecphp/cas-lib": "^1"
     },
     "require-dev": {
-        "drupol/php-conventions": "^1.7.0",
+        "drupol/php-conventions": "^1.7.1",
         "friends-of-phpspec/phpspec-code-coverage": "^4.3.2",
         "infection/infection": "^0.13.6 || ^0.15.0",
         "monolog/monolog": "^1.0",
