@@ -7,9 +7,6 @@ namespace EcPhp\Ecas;
 use EcPhp\CasLib\Configuration\Properties;
 use EcPhp\CasLib\Configuration\PropertiesInterface;
 
-/**
- * Class Ecas.
- */
 final class EcasProperties implements PropertiesInterface
 {
     /**

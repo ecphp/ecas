@@ -10,9 +10,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-/**
- * Class Ecas.
- */
 final class Ecas implements CasInterface
 {
     /**
@@ -25,12 +22,6 @@ final class Ecas implements CasInterface
      */
     private $streamFactory;
 
-    /**
-     * Ecas constructor.
-     *
-     * @param \EcPhp\CasLib\CasInterface $cas
-     * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
-     */
     public function __construct(CasInterface $cas, StreamFactoryInterface $streamFactory)
     {
         $this->cas = $cas;
