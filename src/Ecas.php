@@ -13,19 +13,25 @@ use Psr\Http\Message\StreamFactoryInterface;
 final class Ecas implements CasInterface
 {
     /**
-     * @var \EcPhp\CasLib\CasInterface
+     * @var CasInterface
      */
     private $cas;
 
     /**
-     * @var \Psr\Http\Message\StreamFactoryInterface
+     * @var ServerRequestInterface
+     */
+    private $serverRequest;
+
+    /**
+     * @var StreamFactoryInterface
      */
     private $streamFactory;
 
-    public function __construct(CasInterface $cas, StreamFactoryInterface $streamFactory)
+    public function __construct(CasInterface $cas, StreamFactoryInterface $streamFactory, ServerRequestInterface $serverRequest)
     {
         $this->cas = $cas;
         $this->streamFactory = $streamFactory;
+        $this->serverRequest = $serverRequest;
     }
 
     /**
@@ -121,7 +127,24 @@ final class Ecas implements CasInterface
         array $parameters = [],
         ?ResponseInterface $response = null
     ): ?ResponseInterface {
-        return $this->cas->requestTicketValidation($parameters, $response);
+        if (false === $this->supportAuthentication()) {
+            return null;
+        }
+
+        // check for ticket in Authorization header as provided by OpenId
+        // Authorization: cas_ticket PT-226194-QdoP...
+        $ticketStr = $this->serverRequest->getHeader('Authorization') ?? '';
+
+        /** @var string $ticket */
+        $ticket = preg_replace('/^cas_ticket /i', '', $ticketStr);
+
+        $parameters += ['ticket' => $ticket];
+
+        if (true === $this->proxyMode()) {
+            return $this->cas->requestProxyValidate($parameters, $response);
+        }
+
+        return $this->cas->requestServiceValidate($parameters, $response);
     }
 
     /**
@@ -141,5 +164,13 @@ final class Ecas implements CasInterface
         $clone->cas = $clone->cas->withServerRequest($serverRequest);
 
         return $clone;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function proxyMode(): bool
+    {
+        return isset($this->getProperties()['protocol']['serviceValidate']['default_parameters']['pgtUrl']);
     }
 }

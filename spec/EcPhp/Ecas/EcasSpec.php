@@ -66,6 +66,7 @@ class EcasSpec extends ObjectBehavior
             $psr17Factory, // UploadedFileFactory
             $psr17Factory  // StreamFactory
         );
+        $serverRequest = $creator->fromGlobals();
 
         $cas = new Cas(
             $creator->fromGlobals(),
@@ -79,6 +80,6 @@ class EcasSpec extends ObjectBehavior
             new NullLogger()
         );
 
-        $this->beConstructedWith($cas, $psr17Factory);
+        $this->beConstructedWith($cas, $psr17Factory, $serverRequest);
     }
 }
