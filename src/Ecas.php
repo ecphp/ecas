@@ -31,9 +31,9 @@ final class Ecas implements CasInterface
     /**
      * {@inheritdoc}
      */
-    public function authenticate(): ?array
+    public function authenticate(array $parameters = []): ?array
     {
-        return $this->cas->authenticate();
+        return $this->cas->authenticate($parameters);
     }
 
     /**
@@ -127,9 +127,9 @@ final class Ecas implements CasInterface
     /**
      * {@inheritdoc}
      */
-    public function supportAuthentication(): bool
+    public function supportAuthentication(array $parameters = []): bool
     {
-        return $this->cas->supportAuthentication();
+        return $this->cas->supportAuthentication($parameters);
     }
 
     /**
