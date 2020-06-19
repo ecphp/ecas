@@ -6,6 +6,7 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\CasInterface;
 use EcPhp\CasLib\Configuration\PropertiesInterface;
+use EcPhp\CasLib\Utils\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -16,6 +17,11 @@ final class Ecas implements CasInterface
      * @var \EcPhp\CasLib\CasInterface
      */
     private $cas;
+
+    /**
+     * @var \Psr\Http\Message\ServerRequestInterface
+     */
+    private $serverRequest;
 
     /**
      * @var \Psr\Http\Message\StreamFactoryInterface
@@ -121,6 +127,27 @@ final class Ecas implements CasInterface
         array $parameters = [],
         ?ResponseInterface $response = null
     ): ?ResponseInterface {
+        // check for ticket in Authorization header as provided by OpenId
+        // Authorization: cas_ticket PT-226194-QdoP...
+        /** @var string $ticket */
+        $ticket = preg_replace(
+            '/^cas_ticket /i',
+            '',
+            $this->serverRequest->getHeaderLine('Authorization') ?? ''
+        );
+
+        if ('' === $ticket) {
+            $ticket = Uri::getParam(
+                $this->serverRequest->getUri(),
+                'ticket',
+                ''
+            );
+        }
+
+        if (null !== $ticket) {
+            $parameters += ['ticket' => $ticket];
+        }
+
         return $this->cas->requestTicketValidation($parameters, $response);
     }
 
@@ -138,6 +165,7 @@ final class Ecas implements CasInterface
     public function withServerRequest(ServerRequestInterface $serverRequest): CasInterface
     {
         $clone = clone $this;
+        $clone->serverRequest = $serverRequest;
         $clone->cas = $clone->cas->withServerRequest($serverRequest);
 
         return $clone;
