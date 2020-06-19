@@ -18,6 +18,26 @@ require_once __DIR__ . '/CasHelper.php';
 
 class EcasSpec extends ObjectBehavior
 {
+
+    public function it_can_do_a_service_ticket_validation_with_a_request_header()
+    {
+        $from = 'http://local/';
+        $request = new ServerRequest('GET', $from, ['Authorization' => 'cas_ticket ticket']);
+
+        $this
+            ->withServerRequest($request)
+            ->requestTicketValidation(['service' => 'service'])
+            ->shouldBeAnInstanceOf(ResponseInterface::class);
+
+        $from = 'http://local/';
+        $request = new ServerRequest('GET', $from);
+
+        $this
+            ->withServerRequest($request)
+            ->requestTicketValidation(['service' => 'service'])
+            ->shouldBeNull();
+    }
+
     public function it_is_returning_xml_on_the_proxycallback()
     {
         $request = new ServerRequest('GET', 'http://local/proxycallback?pgtId=pgtId&pgtIou=pgtIou');

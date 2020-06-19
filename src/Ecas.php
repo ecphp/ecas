@@ -6,6 +6,7 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\CasInterface;
 use EcPhp\CasLib\Configuration\PropertiesInterface;
+use EcPhp\CasLib\Utils\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -21,6 +22,11 @@ final class Ecas implements CasInterface
      * @var \Psr\Http\Message\StreamFactoryInterface
      */
     private $streamFactory;
+
+    /**
+     * @var \Psr\Http\Message\ServerRequestInterface
+     */
+    private $serverRequest;
 
     public function __construct(CasInterface $cas, StreamFactoryInterface $streamFactory)
     {
@@ -50,7 +56,8 @@ final class Ecas implements CasInterface
     public function handleProxyCallback(
         array $parameters = [],
         ?ResponseInterface $response = null
-    ): ?ResponseInterface {
+    ): ?ResponseInterface
+    {
         $body = '<?xml version="1.0" encoding="utf-8"?><proxySuccess xmlns="http://www.yale.edu/tp/casClient" />';
 
         $response = $this
@@ -90,7 +97,8 @@ final class Ecas implements CasInterface
     public function requestProxyTicket(
         array $parameters = [],
         ?ResponseInterface $response = null
-    ): ?ResponseInterface {
+    ): ?ResponseInterface
+    {
         return $this->cas->requestProxyTicket($parameters, $response);
     }
 
@@ -100,7 +108,8 @@ final class Ecas implements CasInterface
     public function requestProxyValidate(
         array $parameters = [],
         ?ResponseInterface $response = null
-    ): ?ResponseInterface {
+    ): ?ResponseInterface
+    {
         return $this->cas->requestProxyValidate($parameters, $response);
     }
 
@@ -110,7 +119,8 @@ final class Ecas implements CasInterface
     public function requestServiceValidate(
         array $parameters = [],
         ?ResponseInterface $response = null
-    ): ?ResponseInterface {
+    ): ?ResponseInterface
+    {
         return $this->cas->requestServiceValidate($parameters, $response);
     }
 
@@ -120,7 +130,29 @@ final class Ecas implements CasInterface
     public function requestTicketValidation(
         array $parameters = [],
         ?ResponseInterface $response = null
-    ): ?ResponseInterface {
+    ): ?ResponseInterface
+    {
+        // check for ticket in Authorization header as provided by OpenId
+        // Authorization: cas_ticket PT-226194-QdoP...
+        /** @var string $ticket */
+        $ticket = preg_replace(
+            '/^cas_ticket /i',
+            '',
+            $this->serverRequest->getHeaderLine('Authorization') ?? ''
+        );
+
+        if ('' === $ticket) {
+            $ticket = Uri::getParam(
+                $this->serverRequest->getUri(),
+                'ticket',
+                ''
+            );
+        }
+
+        if (null !== $ticket){
+            $parameters += ['ticket' => $ticket];
+        }
+        
         return $this->cas->requestTicketValidation($parameters, $response);
     }
 
@@ -138,6 +170,7 @@ final class Ecas implements CasInterface
     public function withServerRequest(ServerRequestInterface $serverRequest): CasInterface
     {
         $clone = clone $this;
+        $clone->serverRequest = $serverRequest;
         $clone->cas = $clone->cas->withServerRequest($serverRequest);
 
         return $clone;
