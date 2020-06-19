@@ -18,7 +18,6 @@ require_once __DIR__ . '/CasHelper.php';
 
 class EcasSpec extends ObjectBehavior
 {
-
     public function it_can_do_a_service_ticket_validation_with_a_request_header()
     {
         $from = 'http://local/';
