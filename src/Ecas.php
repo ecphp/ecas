@@ -144,7 +144,9 @@ final class Ecas implements CasInterface
             );
         }
 
-        $parameters += ['ticket' => $ticket ?? ''];
+        if (null !== $ticket) {
+            $parameters += ['ticket' => $ticket];
+        }
 
         return $this->cas->requestTicketValidation($parameters, $response);
     }
