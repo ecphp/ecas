@@ -127,6 +127,48 @@ final class Ecas implements CasInterface
         array $parameters = [],
         ?ResponseInterface $response = null
     ): ?ResponseInterface {
+        $ticket = $this->extractTicket();
+
+        if (null !== $ticket) {
+            $parameters += ['ticket' => $ticket];
+        }
+
+        return $this->cas->requestTicketValidation($parameters, $response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportAuthentication(array $parameters = []): bool
+    {
+        $ticket = $this->extractTicket();
+
+        if (null !== $ticket) {
+            $parameters += ['ticket' => $ticket];
+        }
+
+        return $this->cas->supportAuthentication($parameters);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function withServerRequest(ServerRequestInterface $serverRequest): CasInterface
+    {
+        $clone = clone $this;
+        $clone->serverRequest = $serverRequest;
+        $clone->cas = $clone->cas->withServerRequest($serverRequest);
+
+        return $clone;
+    }
+
+    /**
+     * Extract ticket from $request.
+     *
+     * @return string|null
+     */
+    private function extractTicket()
+    {
         // check for ticket in Authorization header as provided by OpenId
         // Authorization: cas_ticket PT-226194-QdoP...
         /** @var string $ticket */
@@ -144,30 +186,6 @@ final class Ecas implements CasInterface
             );
         }
 
-        if (null !== $ticket) {
-            $parameters += ['ticket' => $ticket];
-        }
-
-        return $this->cas->requestTicketValidation($parameters, $response);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function supportAuthentication(array $parameters = []): bool
-    {
-        return $this->cas->supportAuthentication($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function withServerRequest(ServerRequestInterface $serverRequest): CasInterface
-    {
-        $clone = clone $this;
-        $clone->serverRequest = $serverRequest;
-        $clone->cas = $clone->cas->withServerRequest($serverRequest);
-
-        return $clone;
+        return $ticket;
     }
 }
