@@ -35,6 +35,16 @@ class EcasSpec extends ObjectBehavior
             ->withServerRequest($request)
             ->requestTicketValidation(['service' => 'service'])
             ->shouldBeNull();
+
+        // Make sure that if a service is passed through the argument, it is
+        // not overridden.
+        $from = 'http://local/';
+        $request = new ServerRequest('GET', $from, ['Authorization' => 'cas_ticket foo']);
+
+        $this
+            ->withServerRequest($request)
+            ->requestTicketValidation(['service' => 'service', 'ticket' => 'ticket'])
+            ->shouldBeAnInstanceOf(ResponseInterface::class);
     }
 
     public function it_is_returning_xml_on_the_proxycallback()
@@ -74,6 +84,35 @@ class EcasSpec extends ObjectBehavior
             ->handleProxyCallback()
             ->getStatusCode()
             ->shouldReturn(500);
+    }
+
+    public function it_support_authentication_when_a_ticket_is_in_the_request_header()
+    {
+        $from = 'http://local/';
+        $request = new ServerRequest('GET', $from, ['Authorization' => 'cas_ticket ticket']);
+
+        $this
+            ->withServerRequest($request)
+            ->supportAuthentication()
+            ->shouldReturn(true);
+
+        $from = 'http://local/';
+        $request = new ServerRequest('GET', $from);
+
+        $this
+            ->withServerRequest($request)
+            ->supportAuthentication()
+            ->shouldReturn(false);
+
+        // Make sure that if a service is passed through the argument, it is
+        // not overridden.
+        $from = 'http://local/';
+        $request = new ServerRequest('GET', $from, ['Authorization' => 'cas_ticket foo']);
+
+        $this
+            ->withServerRequest($request)
+            ->supportAuthentication(['service' => 'service', 'ticket' => 'ticket'])
+            ->shouldReturn(true);
     }
 
     public function let()
