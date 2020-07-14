@@ -9,6 +9,8 @@ use EcPhp\CasLib\Introspection\Contract\IntrospectorInterface;
 use EcPhp\CasLib\Introspection\ServiceValidate;
 use Psr\Http\Message\ResponseInterface;
 
+use function in_array;
+
 final class EcasIntrospector implements IntrospectorInterface
 {
     /**
@@ -54,18 +56,23 @@ final class EcasIntrospector implements IntrospectorInterface
      */
     private function normalizeUserData(array $data): array
     {
-        $storage = [];
-        $rootAttributes = ['user', 'proxyGrantingTicket', 'proxies'];
         $data = $data['serviceResponse']['authenticationSuccess'];
+        $data += ['attributes' => []];
 
-        foreach ($rootAttributes as $rootAttribute) {
-            $storage[$rootAttribute] = $data[$rootAttribute] ?? null;
+        $rootAttributes = ['user', 'proxyGrantingTicket', 'proxies', 'attributes'];
+
+        foreach ($data as $key => $property) {
+            if (in_array($key, $rootAttributes, true)) {
+                continue;
+            }
+
+            $data['attributes'] += [$key => $property];
+            unset($data[$key]);
         }
-        $storage['attributes'] = array_diff_key($data, array_flip($rootAttributes));
 
         return [
             'serviceResponse' => [
-                'authenticationSuccess' => array_filter($storage) + ['attributes' => []],
+                'authenticationSuccess' => $data,
             ],
         ];
     }
