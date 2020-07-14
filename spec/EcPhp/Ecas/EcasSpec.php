@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace spec\EcPhp\Ecas;
 
 use EcPhp\CasLib\Cas;
+use EcPhp\CasLib\Introspection\Introspector;
+use EcPhp\Ecas\Introspection\EcasIntrospector;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\ServerRequest;
 use Nyholm\Psr7Server\ServerRequestCreator;
@@ -134,7 +136,8 @@ class EcasSpec extends ObjectBehavior
             $psr17Factory,
             $psr17Factory,
             new ArrayAdapter(),
-            new NullLogger()
+            new NullLogger(),
+            new EcasIntrospector(new Introspector())
         );
 
         $this->beConstructedWith($cas, $psr17Factory);
