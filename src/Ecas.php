@@ -6,6 +6,7 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\CasInterface;
 use EcPhp\CasLib\Configuration\PropertiesInterface;
+use EcPhp\CasLib\Introspection\Contract\IntrospectionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -39,6 +40,11 @@ final class Ecas implements CasInterface
     public function authenticate(array $parameters = []): ?array
     {
         return $this->cas->authenticate($parameters);
+    }
+
+    public function detect(ResponseInterface $response): IntrospectionInterface
+    {
+        return $this->cas->detect($response);
     }
 
     /**
