@@ -159,8 +159,6 @@ final class Ecas implements CasInterface
 
     /**
      * Extract ticket from $request.
-     *
-     * @return string
      */
     private function extractTicketFromRequestHeaders(): string
     {
