@@ -88,6 +88,25 @@ class EcasSpec extends ObjectBehavior
             ->shouldReturn(500);
     }
 
+    public function it_strips_out_pop_from_the_beginning_of_the_ticket_if_any()
+    {
+        $from = 'http://local/foo';
+        $request = new ServerRequest('GET', $from);
+
+        $this
+            ->withServerRequest($request)
+            ->requestTicketValidation(['service' => 'service', 'ticket' => 'pop popticket'])
+            ->shouldReturnAnInstanceOf(ResponseInterface::class);
+
+        $from = 'http://local/foo?ticket=pop+popticket';
+        $request = new ServerRequest('GET', $from);
+
+        $this
+            ->withServerRequest($request)
+            ->requestTicketValidation(['service' => 'service'])
+            ->shouldReturnAnInstanceOf(ResponseInterface::class);
+    }
+
     public function it_support_authentication_when_a_ticket_is_in_the_request_header()
     {
         $from = 'http://local/';

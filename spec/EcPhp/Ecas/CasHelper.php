@@ -18,6 +18,7 @@ class CasHelper
             $info = [];
 
             switch ($url) {
+                case 'http://local/cas/serviceValidate?service=service&ticket=popticket':
                 case 'http://local/cas/serviceValidate?service=service&ticket=ticket':
                 case 'http://local/cas/serviceValidate?ticket=ST-ticket&service=http%3A%2F%2Ffrom':
                 case 'http://local/cas/serviceValidate?ticket=ST-ticket&service=http%3A%2F%2Flocal%2Fcas%2FserviceValidate%3Fservice%3Dservice':
