@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ *
+ * @see https://github.com/ecphp
+ */
+
 declare(strict_types=1);
 
 namespace EcPhp\Ecas;
@@ -26,9 +33,6 @@ final class EcasProperties implements PropertiesInterface
         $this->cas = new Properties($properties);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function all(): array
     {
         return $this->cas->all();

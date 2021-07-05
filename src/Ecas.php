@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ *
+ * @see https://github.com/ecphp
+ */
+
 declare(strict_types=1);
 
 namespace EcPhp\Ecas;
@@ -34,9 +41,6 @@ final class Ecas implements CasInterface
         $this->streamFactory = $streamFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function authenticate(array $parameters = []): ?array
     {
         return $this->cas->authenticate($parameters);
@@ -47,17 +51,11 @@ final class Ecas implements CasInterface
         return $this->cas->detect($response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProperties(): PropertiesInterface
     {
         return $this->cas->getProperties();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleProxyCallback(
         array $parameters = [],
         ?ResponseInterface $response = null
@@ -79,25 +77,16 @@ final class Ecas implements CasInterface
         return $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function login(array $parameters = []): ?ResponseInterface
     {
         return $this->cas->login($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function logout(array $parameters = []): ?ResponseInterface
     {
         return $this->cas->logout($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requestProxyTicket(
         array $parameters = [],
         ?ResponseInterface $response = null
@@ -105,9 +94,6 @@ final class Ecas implements CasInterface
         return $this->cas->requestProxyTicket($parameters, $response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requestProxyValidate(
         array $parameters = [],
         ?ResponseInterface $response = null
@@ -115,9 +101,6 @@ final class Ecas implements CasInterface
         return $this->cas->requestProxyValidate($parameters, $response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requestServiceValidate(
         array $parameters = [],
         ?ResponseInterface $response = null
@@ -125,9 +108,6 @@ final class Ecas implements CasInterface
         return $this->cas->requestServiceValidate($parameters, $response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requestTicketValidation(
         array $parameters = [],
         ?ResponseInterface $response = null
@@ -139,9 +119,6 @@ final class Ecas implements CasInterface
         return $this->cas->requestTicketValidation($parameters, $response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportAuthentication(array $parameters = []): bool
     {
         if ('' !== $ticket = $this->extractTicketFromRequestHeaders()) {
@@ -151,9 +128,6 @@ final class Ecas implements CasInterface
         return $this->cas->supportAuthentication($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function withServerRequest(ServerRequestInterface $serverRequest): CasInterface
     {
         $clone = clone $this;
