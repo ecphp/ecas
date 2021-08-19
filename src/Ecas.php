@@ -14,9 +14,13 @@ namespace EcPhp\Ecas;
 use EcPhp\CasLib\CasInterface;
 use EcPhp\CasLib\Configuration\PropertiesInterface;
 use EcPhp\CasLib\Introspection\Contract\IntrospectionInterface;
+use EcPhp\CasLib\Introspection\Contract\ServiceValidate;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Throwable;
+
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 final class Ecas implements CasInterface
 {
@@ -116,7 +120,28 @@ final class Ecas implements CasInterface
             $parameters += ['ticket' => $ticket];
         }
 
-        return $this->cas->requestTicketValidation($parameters, $response);
+        if (null === $response = $this->cas->requestTicketValidation($parameters, $response)) {
+            return null;
+        }
+
+        try {
+            $introspect = $this->detect($response);
+        } catch (Throwable $e) {
+            return null;
+        }
+
+        if (!$introspect instanceof ServiceValidate) {
+            return null;
+        }
+
+        $authenticationLevelFromResponse = $introspect->getParsedResponse()['serviceResponse']['authenticationSuccess']['attributes']['authenticationLevel'] ?? 'BASIC';
+        $authenticationLevelFromConfiguration = $this->cas->getProperties()['protocol']['login']['default_parameters']['authenticationLevel'] ?? 'BASIC';
+
+        if ($authenticationLevelFromResponse !== $authenticationLevelFromConfiguration) {
+            return null;
+        }
+
+        return $response;
     }
 
     public function supportAuthentication(array $parameters = []): bool
