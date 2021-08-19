@@ -14,7 +14,6 @@ namespace spec\EcPhp\Ecas;
 use EcPhp\CasLib\Configuration\Properties as CasProperties;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
-use tests\EcPhp\CasLib\Exception\TestClientException;
 
 class CasHelper
 {
@@ -65,6 +64,36 @@ class CasHelper
                             <cas:proxy>http://app/proxyCallback.php</cas:proxy>
                           </cas:proxies>
                          </cas:authenticationSuccess>
+                        </cas:serviceResponse>
+                        EOF;
+
+                    break;
+
+                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_feature_success':
+                    $body = <<< 'EOF'
+                        <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
+                         <cas:authenticationSuccess>
+                          <cas:user>username</cas:user>
+                          <cas:proxies>
+                            <cas:proxy>http://app/proxyCallback.php</cas:proxy>
+                          </cas:proxies>
+                          <cas:authenticationLevel>BASIC</cas:authenticationLevel>
+                         </cas:authenticationSuccess>
+                        </cas:serviceResponse>
+                        EOF;
+
+                    break;
+
+                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_feature_failure':
+                    $body = <<< 'EOF'
+                        <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
+                            <cas:authenticationSuccess>
+                            <cas:user>username</cas:user>
+                            <cas:proxies>
+                            <cas:proxy>http://app/proxyCallback.php</cas:proxy>
+                            </cas:proxies>
+                            <cas:authenticationLevel>FOOBAR</cas:authenticationLevel>
+                            </cas:authenticationSuccess>
                         </cas:serviceResponse>
                         EOF;
 
@@ -150,42 +179,6 @@ class CasHelper
                         EOF;
 
                     break;
-
-                case 'http://local/cas/proxy?targetService=targetService&pgt=pgt':
-                    $body = <<< 'EOF'
-                        <?xml version="1.0" encoding="utf-8"?>
-                        <cas:serviceResponse xmlns:cas="https://ecas.ec.europa.eu/cas/schemas"
-                                             server="ECAS MOCKUP version 4.6.0.20924 - 09/02/2016 - 14:37"
-                                             date="2019-10-18T12:17:53.069+02:00" version="4.5">
-                        	<cas:proxySuccess>
-                        		<cas:proxyTicket>PT-214-A3OoEPNr4Q9kNNuYzmfN8azU31aDUsuW8nk380k7wDExT5PFJpxR1TrNI3q3VGzyDdi0DpZ1LKb8IhPKZKQvavW-8hnfexYjmLCx7qWNsLib1W-DCzzoLVTosAUFzP3XDn5dNzoNtxIXV9KSztF9fYhwHvU0</cas:proxyTicket>
-                        	</cas:proxySuccess>
-                        </cas:serviceResponse>
-                        EOF;
-
-                    break;
-
-                case 'http://local/cas/proxy?targetService=targetService&pgt=pgt-error-in-getCredentials':
-                    $body = <<< 'EOF'
-                        <?xml version="1.0" encoding="utf-8"?>
-                        <cas:serviceResponse xmlns:cas="https://ecas.ec.europa.eu/cas/schemas"
-                                             server="ECAS MOCKUP version 4.6.0.20924 - 09/02/2016 - 14:37"
-                                             date="2019-10-18T12:17:53.069+02:00" version="4.5">
-                        	<cas:proxyFailure>
-                        	TODO: Find something to put here.
-                            </cas:proxyFailure>
-                        </cas:serviceResponse>
-                        EOF;
-
-                    break;
-
-                case 'http://local/cas/serviceValidate?service=http%3A%2F%2Ffrom&ticket=BAD-http-query':
-                case 'http://local/cas/proxyValidate?service=http%3A%2F%2Ffrom&ticket=BAD-http-query':
-                case 'http://local/cas/proxyValidate?service=http%3A%2F%2Flocal%2Fcas%2FproxyValidate%3Fservice%3Dservice%26error%3DTestClientException&ticket=ticket&error=TestClientException':
-                case 'http://local/cas/proxy?targetService=targetService&pgt=pgt&error=TestClientException':
-                    throw new TestClientException();
-
-                    break;
             }
 
             return new MockResponse($body, $info);
@@ -206,6 +199,7 @@ class CasHelper
                         'custom',
                         'renew',
                         'gateway',
+                        'authenticationLevel',
                     ],
                 ],
                 'logout' => [

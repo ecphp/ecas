@@ -27,6 +27,22 @@ require_once __DIR__ . '/CasHelper.php';
 
 class EcasSpec extends ObjectBehavior
 {
+    public function it_can_do_a_service_ticket_validation_and_make_sure_authenticationLevel_is_correct()
+    {
+        $from = 'http://local/';
+        $request = new ServerRequest('GET', $from);
+
+        $this
+            ->withServerRequest($request)
+            ->requestTicketValidation(['service' => 'service', 'ticket' => 'authenticationLevel_feature_success'])
+            ->shouldBeAnInstanceOf(ResponseInterface::class);
+
+        $this
+            ->withServerRequest($request)
+            ->requestTicketValidation(['service' => 'service', 'ticket' => 'authenticationLevel_feature_failure'])
+            ->shouldBeNull();
+    }
+
     public function it_can_do_a_service_ticket_validation_with_a_request_header()
     {
         $from = 'http://local/';
