@@ -5,7 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.1](https://github.com/ecphp/ecas/compare/2.1.0...2.1.1)
+## [2.1.2](https://github.com/ecphp/ecas/compare/2.1.1...2.1.2)
+
+### Merged
+
+- Feature/add authentication level checks [`#20`](https://github.com/ecphp/ecas/pull/20)
+- Update infection/infection requirement from ^0.13.6 || ^0.15.3 || ^0.23 to ^0.13.6 || ^0.15.3 || ^0.23 || ^0.24 [`#18`](https://github.com/ecphp/ecas/pull/18)
+- Bump actions/cache from 2.1.5 to 2.1.6 [`#17`](https://github.com/ecphp/ecas/pull/17)
+
+### Commits
+
+- chore: Update composer.json [`72a416f`](https://github.com/ecphp/ecas/commit/72a416fd2510f7532a028cb3fe0f60246415db35)
+- refactor: Add checks on the authenticationLevel attribute. [`6096df8`](https://github.com/ecphp/ecas/commit/6096df827937c29aeff2cd5554bec59c93e7f6ce)
+- tests: Add tests. [`278550d`](https://github.com/ecphp/ecas/commit/278550d05d8cb3e7885d83d11bbd48f342d3cb8a)
+- ci: Enable builds only with PHP 7.4. [`f8ef545`](https://github.com/ecphp/ecas/commit/f8ef5451bb062ecf9bdee4789d7400a66c5481f1)
+- Revert "ci: Disable builds on macOS until phpspec/phpspec#1380 is fixed." [`51ab96b`](https://github.com/ecphp/ecas/commit/51ab96b4847bab19bc07f54301fefd46b6b4cb05)
+
+## [2.1.1](https://github.com/ecphp/ecas/compare/2.1.0...2.1.1) - 2021-07-05
 
 ### Merged
 
@@ -15,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Commits
 
+- docs: Add/update CHANGELOG. [`a83a0ee`](https://github.com/ecphp/ecas/commit/a83a0eee4fd9fd83439f2410786bf0f8bab5c060)
 - Update License file. [`4dac434`](https://github.com/ecphp/ecas/commit/4dac434b61d2786f7e497d035cb219b933481bd1)
 - Update Grumphp configuration. [`1fc901d`](https://github.com/ecphp/ecas/commit/1fc901d07144a236947f775061b6545eb1095e2f)
 - ci: Add automated release on Github Action. [`19a3eeb`](https://github.com/ecphp/ecas/commit/19a3eebab28e8664ae6e8a86e1eb04b79e283388)
