@@ -14,8 +14,16 @@ namespace EcPhp\Ecas;
 use EcPhp\CasLib\Configuration\Properties;
 use EcPhp\CasLib\Configuration\PropertiesInterface;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 final class EcasProperties implements PropertiesInterface
 {
+    private const AUTHENTICATION_LEVELS = [
+        'BASIC',
+        'MEDIUM',
+        'HIGH',
+    ];
+
     /**
      * @var \EcPhp\CasLib\Configuration\PropertiesInterface
      */
@@ -29,6 +37,8 @@ final class EcasProperties implements PropertiesInterface
         $properties['protocol']['proxyValidate']['allowed_parameters'][] = 'userDetails';
         $properties['protocol']['serviceValidate']['default_parameters']['format'] = 'XML';
         $properties['protocol']['proxyValidate']['default_parameters']['format'] = 'XML';
+        $properties['protocol']['login']['allowed_parameters'][] = 'authenticationLevel';
+        $properties['protocol']['login']['default_parameters']['authenticationLevel'] = $properties['protocol']['login']['default_parameters']['authenticationLevel'] ?? self::AUTHENTICATION_LEVELS;
 
         $this->cas = new Properties($properties);
     }
