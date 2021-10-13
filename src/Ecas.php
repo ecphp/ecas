@@ -134,10 +134,10 @@ final class Ecas implements CasInterface
             return null;
         }
 
-        $authenticationLevelFromResponse = $introspect->getParsedResponse()['serviceResponse']['authenticationSuccess']['attributes']['authenticationLevel'] ?? 'BASIC';
-        $authenticationLevelFromConfiguration = $this->cas->getProperties()['protocol']['login']['default_parameters']['authenticationLevel'] ?? 'BASIC';
+        $authenticationLevelFromResponse = $introspect->getParsedResponse()['serviceResponse']['authenticationSuccess']['attributes']['authenticationLevel'] ?? EcasProperties::AUTHENTICATION_LEVEL_BASIC;
+        $authenticationLevelFromConfiguration = $this->cas->getProperties()['protocol']['login']['default_parameters']['authenticationLevel'];
 
-        if ($authenticationLevelFromResponse !== $authenticationLevelFromConfiguration) {
+        if (EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromResponse] < EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromConfiguration]) {
             return null;
         }
 

@@ -43,6 +43,14 @@ class EcasPropertiesSpec extends ObjectBehavior
                                 'format' => 'XML',
                             ],
                         ],
+                        'login' => [
+                            'allowed_parameters' => [
+                                'authenticationLevel',
+                            ],
+                            'default_parameters' => [
+                                'authenticationLevel' => 'BASIC',
+                            ],
+                        ],
                     ],
                 ]
             );

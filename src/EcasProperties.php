@@ -13,13 +13,28 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\Configuration\Properties;
 use EcPhp\CasLib\Configuration\PropertiesInterface;
+use InvalidArgumentException;
+
+use function array_key_exists;
+use function is_string;
+
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 final class EcasProperties implements PropertiesInterface
 {
-    /**
-     * @var \EcPhp\CasLib\Configuration\PropertiesInterface
-     */
-    private $cas;
+    public const AUTHENTICATION_LEVEL_BASIC = 'BASIC';
+
+    public const AUTHENTICATION_LEVEL_HIGH = 'HIGH';
+
+    public const AUTHENTICATION_LEVEL_MEDIUM = 'MEDIUM';
+
+    public const AUTHENTICATION_LEVELS = [
+        self::AUTHENTICATION_LEVEL_HIGH => 7,
+        self::AUTHENTICATION_LEVEL_MEDIUM => 3,
+        self::AUTHENTICATION_LEVEL_BASIC => 1,
+    ];
+
+    private PropertiesInterface $properties;
 
     public function __construct(PropertiesInterface $casProperties)
     {
@@ -29,13 +44,23 @@ final class EcasProperties implements PropertiesInterface
         $properties['protocol']['proxyValidate']['allowed_parameters'][] = 'userDetails';
         $properties['protocol']['serviceValidate']['default_parameters']['format'] = 'XML';
         $properties['protocol']['proxyValidate']['default_parameters']['format'] = 'XML';
+        $properties['protocol']['login']['allowed_parameters'][] = 'authenticationLevel';
+        $properties['protocol']['login']['default_parameters']['authenticationLevel'] = $properties['protocol']['login']['default_parameters']['authenticationLevel'] ?? self::AUTHENTICATION_LEVEL_BASIC;
 
-        $this->cas = new Properties($properties);
+        if (false === is_string($properties['protocol']['login']['default_parameters']['authenticationLevel'])) {
+            throw new InvalidArgumentException(sprintf('The "%s" property must be a string. Available values are: %s', 'authenticationLevel', implode(', ', array_keys(self::AUTHENTICATION_LEVELS))));
+        }
+
+        if (false === array_key_exists($properties['protocol']['login']['default_parameters']['authenticationLevel'], self::AUTHENTICATION_LEVELS)) {
+            throw new InvalidArgumentException(sprintf('The "%s" property is invalid. Available values are: %s', 'authenticationLevel', implode(', ', array_keys(self::AUTHENTICATION_LEVELS))));
+        }
+
+        $this->properties = new Properties($properties);
     }
 
     public function all(): array
     {
-        return $this->cas->all();
+        return $this->properties->all();
     }
 
     /**
@@ -43,7 +68,7 @@ final class EcasProperties implements PropertiesInterface
      */
     public function offsetExists($offset)
     {
-        return $this->cas->offsetExists($offset);
+        return $this->properties->offsetExists($offset);
     }
 
     /**
@@ -51,7 +76,7 @@ final class EcasProperties implements PropertiesInterface
      */
     public function offsetGet($offset)
     {
-        return $this->cas->offsetGet($offset);
+        return $this->properties->offsetGet($offset);
     }
 
     /**
@@ -60,7 +85,7 @@ final class EcasProperties implements PropertiesInterface
      */
     public function offsetSet($offset, $value)
     {
-        $this->cas->offsetSet($offset, $value);
+        $this->properties->offsetSet($offset, $value);
     }
 
     /**
@@ -68,6 +93,6 @@ final class EcasProperties implements PropertiesInterface
      */
     public function offsetUnset($offset)
     {
-        $this->cas->offsetUnset($offset);
+        $this->properties->offsetUnset($offset);
     }
 }

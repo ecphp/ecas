@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace spec\EcPhp\Ecas;
 
 use EcPhp\CasLib\Configuration\Properties as CasProperties;
+use EcPhp\CasLib\Configuration\PropertiesInterface;
+use EcPhp\Ecas\EcasProperties;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
@@ -33,6 +35,7 @@ class CasHelper
                     <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
                      <cas:authenticationSuccess>
                       <cas:user>username</cas:user>
+                      <cas:authenticationLevel>MEDIUM</cas:authenticationLevel>
                      </cas:authenticationSuccess>
                     </cas:serviceResponse>
                     EOF;
@@ -77,14 +80,14 @@ class CasHelper
                           <cas:proxies>
                             <cas:proxy>http://app/proxyCallback.php</cas:proxy>
                           </cas:proxies>
-                          <cas:authenticationLevel>BASIC</cas:authenticationLevel>
+                          <cas:authenticationLevel>MEDIUM</cas:authenticationLevel>
                          </cas:authenticationSuccess>
                         </cas:serviceResponse>
                         EOF;
 
                     break;
 
-                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_feature_failure':
+                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_high':
                     $body = <<< 'EOF'
                         <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
                             <cas:authenticationSuccess>
@@ -92,7 +95,22 @@ class CasHelper
                             <cas:proxies>
                             <cas:proxy>http://app/proxyCallback.php</cas:proxy>
                             </cas:proxies>
-                            <cas:authenticationLevel>FOOBAR</cas:authenticationLevel>
+                            <cas:authenticationLevel>HIGH</cas:authenticationLevel>
+                            </cas:authenticationSuccess>
+                        </cas:serviceResponse>
+                        EOF;
+
+                    break;
+
+                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_basic':
+                    $body = <<< 'EOF'
+                        <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
+                            <cas:authenticationSuccess>
+                            <cas:user>username</cas:user>
+                            <cas:proxies>
+                            <cas:proxy>http://app/proxyCallback.php</cas:proxy>
+                            </cas:proxies>
+                            <cas:authenticationLevel>BASIC</cas:authenticationLevel>
                             </cas:authenticationSuccess>
                         </cas:serviceResponse>
                         EOF;
@@ -187,67 +205,71 @@ class CasHelper
         return new MockHttpClient($callback);
     }
 
-    public static function getTestProperties(): CasProperties
+    public static function getTestProperties(): PropertiesInterface
     {
-        return new CasProperties([
-            'base_url' => 'http://local/cas',
-            'protocol' => [
-                'login' => [
-                    'path' => '/login',
-                    'allowed_parameters' => [
-                        'service',
-                        'custom',
-                        'renew',
-                        'gateway',
-                        'authenticationLevel',
+        return new EcasProperties(
+            new CasProperties([
+                'base_url' => 'http://local/cas',
+                'protocol' => [
+                    'login' => [
+                        'path' => '/login',
+                        'allowed_parameters' => [
+                            'service',
+                            'custom',
+                            'renew',
+                            'gateway',
+                        ],
+                        'default_parameters' => [
+                            'authenticationLevel' => 'MEDIUM',
+                        ],
+                    ],
+                    'logout' => [
+                        'path' => '/logout',
+                        'allowed_parameters' => [
+                            'service',
+                            'custom',
+                        ],
+                    ],
+                    'serviceValidate' => [
+                        'path' => '/serviceValidate',
+                        'allowed_parameters' => [
+                            'ticket',
+                            'service',
+                            'custom',
+                        ],
+                        'default_parameters' => [
+                            'format' => 'XML',
+                        ],
+                    ],
+                    'proxyValidate' => [
+                        'path' => '/proxyValidate',
+                        'allowed_parameters' => [
+                            'ticket',
+                            'service',
+                            'custom',
+                        ],
+                        'default_parameters' => [
+                            'format' => 'XML',
+                        ],
+                    ],
+                    'proxy' => [
+                        'path' => '/proxy',
+                        'allowed_parameters' => [
+                            'targetService',
+                            'pgt',
+                        ],
                     ],
                 ],
-                'logout' => [
-                    'path' => '/logout',
-                    'allowed_parameters' => [
-                        'service',
-                        'custom',
-                    ],
-                ],
-                'serviceValidate' => [
-                    'path' => '/serviceValidate',
-                    'allowed_parameters' => [
-                        'ticket',
-                        'service',
-                        'custom',
-                    ],
-                    'default_parameters' => [
-                        'format' => 'XML',
-                    ],
-                ],
-                'proxyValidate' => [
-                    'path' => '/proxyValidate',
-                    'allowed_parameters' => [
-                        'ticket',
-                        'service',
-                        'custom',
-                    ],
-                    'default_parameters' => [
-                        'format' => 'XML',
-                    ],
-                ],
-                'proxy' => [
-                    'path' => '/proxy',
-                    'allowed_parameters' => [
-                        'targetService',
-                        'pgt',
-                    ],
-                ],
-            ],
-        ]);
+            ])
+        );
     }
 
-    public static function getTestPropertiesWithPgtUrl(): CasProperties
+    public static function getTestPropertiesWithPgtUrl(): PropertiesInterface
     {
         $properties = self::getTestProperties()->all();
 
         $properties['protocol']['serviceValidate']['default_parameters']['pgtUrl'] = 'https://from/proxyCallback.php';
 
-        return new CasProperties($properties);
+        return new EcasProperties(new CasProperties($properties));
     }
 }
