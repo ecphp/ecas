@@ -9,7 +9,7 @@
     },
     "require-dev": {
         "ecphp/php-conventions": "^1",
-        "friends-of-phpspec/phpspec-code-coverage": "^4.3.2",
+        "friends-of-phpspec/phpspec-code-coverage": "^4.3.2 || ^6.0.0",
         "infection/infection": "^0.13.6 || ^0.15.3 || ^0.23 || ^0.24",
         "infection/phpspec-adapter": "^0.1.2",
         "monolog/monolog": "^1.0",
