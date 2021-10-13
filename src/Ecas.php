@@ -20,8 +20,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Throwable;
 
-use function in_array;
-
 // phpcs:disable Generic.Files.LineLength.TooLong
 
 final class Ecas implements CasInterface
@@ -136,10 +134,10 @@ final class Ecas implements CasInterface
             return null;
         }
 
-        $authenticationLevelFromResponse = $introspect->getParsedResponse()['serviceResponse']['authenticationSuccess']['attributes']['authenticationLevel'] ?? 'BASIC';
+        $authenticationLevelFromResponse = $introspect->getParsedResponse()['serviceResponse']['authenticationSuccess']['attributes']['authenticationLevel'] ?? EcasProperties::AUTHENTICATION_LEVEL_BASIC;
         $authenticationLevelFromConfiguration = $this->cas->getProperties()['protocol']['login']['default_parameters']['authenticationLevel'];
 
-        if (false === in_array(strtoupper($authenticationLevelFromResponse), $authenticationLevelFromConfiguration, true)) {
+        if (EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromResponse] < EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromConfiguration]) {
             return null;
         }
 
