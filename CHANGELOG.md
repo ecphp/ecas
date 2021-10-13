@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.2](https://github.com/ecphp/ecas/compare/2.1.1...2.1.2)
+## [2.1.3](https://github.com/ecphp/ecas/compare/2.1.2...2.1.3)
+
+### Merged
+
+- Support different level of authentication through `authenticationLevel` config parameter [`#21`](https://github.com/ecphp/ecas/pull/21)
+
+### Commits
+
+- refactor: Minor type/variable update. [`0b35851`](https://github.com/ecphp/ecas/commit/0b3585114f1a97df9622f2bf68809773187503b6)
+- tests: Update tests accordingly. [`f14e71f`](https://github.com/ecphp/ecas/commit/f14e71f1b1f7798442eaa6d9963ee9fae28d7de8)
+- refactor: Update based on ECAS documentation. [`a6b04c8`](https://github.com/ecphp/ecas/commit/a6b04c8a71725a6dbf10969260d40adea6feadc0)
+- chore: Normalize composer.json. [`477bc9b`](https://github.com/ecphp/ecas/commit/477bc9b2f5e1f7eea1ca3dab82646c9c9b1e9541)
+- tests: Update tests accordingly. [`2cf97df`](https://github.com/ecphp/ecas/commit/2cf97dfd6bb10f7cf8957ee637503497d02fad9b)
+- feat: Support different types of `authenticationLevel`. [`19e7fbe`](https://github.com/ecphp/ecas/commit/19e7fbe94f590a0e240714cf08e9a7c1fbd7962c)
+
+## [2.1.2](https://github.com/ecphp/ecas/compare/2.1.1...2.1.2) - 2021-08-19
 
 ### Merged
 
@@ -15,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Commits
 
+- docs: Add/update CHANGELOG. [`31176b4`](https://github.com/ecphp/ecas/commit/31176b4f39dfaf45760aad53f94463c8de563492)
 - chore: Update composer.json [`72a416f`](https://github.com/ecphp/ecas/commit/72a416fd2510f7532a028cb3fe0f60246415db35)
 - refactor: Add checks on the authenticationLevel attribute. [`6096df8`](https://github.com/ecphp/ecas/commit/6096df827937c29aeff2cd5554bec59c93e7f6ce)
 - tests: Add tests. [`278550d`](https://github.com/ecphp/ecas/commit/278550d05d8cb3e7885d83d11bbd48f342d3cb8a)
