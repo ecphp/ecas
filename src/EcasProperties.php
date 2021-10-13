@@ -34,10 +34,7 @@ final class EcasProperties implements PropertiesInterface
         self::AUTHENTICATION_LEVEL_BASIC => 1,
     ];
 
-    /**
-     * @var \EcPhp\CasLib\Configuration\PropertiesInterface
-     */
-    private $cas;
+    private PropertiesInterface $properties;
 
     public function __construct(PropertiesInterface $casProperties)
     {
@@ -58,12 +55,12 @@ final class EcasProperties implements PropertiesInterface
             throw new InvalidArgumentException(sprintf('The "%s" property is invalid. Available values are: %s', 'authenticationLevel', implode(', ', array_keys(self::AUTHENTICATION_LEVELS))));
         }
 
-        $this->cas = new Properties($properties);
+        $this->properties = new Properties($properties);
     }
 
     public function all(): array
     {
-        return $this->cas->all();
+        return $this->properties->all();
     }
 
     /**
@@ -71,7 +68,7 @@ final class EcasProperties implements PropertiesInterface
      */
     public function offsetExists($offset)
     {
-        return $this->cas->offsetExists($offset);
+        return $this->properties->offsetExists($offset);
     }
 
     /**
@@ -79,7 +76,7 @@ final class EcasProperties implements PropertiesInterface
      */
     public function offsetGet($offset)
     {
-        return $this->cas->offsetGet($offset);
+        return $this->properties->offsetGet($offset);
     }
 
     /**
@@ -88,7 +85,7 @@ final class EcasProperties implements PropertiesInterface
      */
     public function offsetSet($offset, $value)
     {
-        $this->cas->offsetSet($offset, $value);
+        $this->properties->offsetSet($offset, $value);
     }
 
     /**
@@ -96,6 +93,6 @@ final class EcasProperties implements PropertiesInterface
      */
     public function offsetUnset($offset)
     {
-        $this->cas->offsetUnset($offset);
+        $this->properties->offsetUnset($offset);
     }
 }
