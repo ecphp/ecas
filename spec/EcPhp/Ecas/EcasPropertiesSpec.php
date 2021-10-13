@@ -48,11 +48,7 @@ class EcasPropertiesSpec extends ObjectBehavior
                                 'authenticationLevel',
                             ],
                             'default_parameters' => [
-                                'authenticationLevel' => [
-                                    'BASIC',
-                                    'MEDIUM',
-                                    'HIGH',
-                                ],
+                                'authenticationLevel' => 'BASIC',
                             ],
                         ],
                     ],

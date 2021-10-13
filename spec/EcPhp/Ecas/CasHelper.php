@@ -35,6 +35,7 @@ class CasHelper
                     <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
                      <cas:authenticationSuccess>
                       <cas:user>username</cas:user>
+                      <cas:authenticationLevel>MEDIUM</cas:authenticationLevel>
                      </cas:authenticationSuccess>
                     </cas:serviceResponse>
                     EOF;
@@ -79,14 +80,14 @@ class CasHelper
                           <cas:proxies>
                             <cas:proxy>http://app/proxyCallback.php</cas:proxy>
                           </cas:proxies>
-                          <cas:authenticationLevel>BASIC</cas:authenticationLevel>
+                          <cas:authenticationLevel>MEDIUM</cas:authenticationLevel>
                          </cas:authenticationSuccess>
                         </cas:serviceResponse>
                         EOF;
 
                     break;
 
-                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_feature_failure':
+                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_high':
                     $body = <<< 'EOF'
                         <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
                             <cas:authenticationSuccess>
@@ -94,7 +95,22 @@ class CasHelper
                             <cas:proxies>
                             <cas:proxy>http://app/proxyCallback.php</cas:proxy>
                             </cas:proxies>
-                            <cas:authenticationLevel>FOOBAR</cas:authenticationLevel>
+                            <cas:authenticationLevel>HIGH</cas:authenticationLevel>
+                            </cas:authenticationSuccess>
+                        </cas:serviceResponse>
+                        EOF;
+
+                    break;
+
+                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_basic':
+                    $body = <<< 'EOF'
+                        <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
+                            <cas:authenticationSuccess>
+                            <cas:user>username</cas:user>
+                            <cas:proxies>
+                            <cas:proxy>http://app/proxyCallback.php</cas:proxy>
+                            </cas:proxies>
+                            <cas:authenticationLevel>BASIC</cas:authenticationLevel>
                             </cas:authenticationSuccess>
                         </cas:serviceResponse>
                         EOF;
@@ -202,6 +218,9 @@ class CasHelper
                             'custom',
                             'renew',
                             'gateway',
+                        ],
+                        'default_parameters' => [
+                            'authenticationLevel' => 'MEDIUM',
                         ],
                     ],
                     'logout' => [

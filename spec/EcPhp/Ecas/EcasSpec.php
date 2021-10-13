@@ -39,7 +39,12 @@ class EcasSpec extends ObjectBehavior
 
         $this
             ->withServerRequest($request)
-            ->requestTicketValidation(['service' => 'service', 'ticket' => 'authenticationLevel_feature_failure'])
+            ->requestTicketValidation(['service' => 'service', 'ticket' => 'authenticationLevel_high'])
+            ->shouldBeAnInstanceOf(ResponseInterface::class);
+
+        $this
+            ->withServerRequest($request)
+            ->requestTicketValidation(['service' => 'service', 'ticket' => 'authenticationLevel_basic'])
             ->shouldBeNull();
     }
 
