@@ -28,25 +28,16 @@ class EcasPropertiesSpec extends ObjectBehavior
                     'foo' => 'bar',
                     'protocol' => [
                         'serviceValidate' => [
-                            'allowed_parameters' => [
-                                0 => 'userDetails',
-                            ],
                             'default_parameters' => [
                                 'format' => 'XML',
                             ],
                         ],
                         'proxyValidate' => [
-                            'allowed_parameters' => [
-                                0 => 'userDetails',
-                            ],
                             'default_parameters' => [
                                 'format' => 'XML',
                             ],
                         ],
                         'login' => [
-                            'allowed_parameters' => [
-                                'authenticationLevel',
-                            ],
                             'default_parameters' => [
                                 'authenticationLevel' => 'BASIC',
                             ],
@@ -54,28 +45,6 @@ class EcasPropertiesSpec extends ObjectBehavior
                     ],
                 ]
             );
-
-        $this
-            ->offsetExists('foo')
-            ->shouldReturn(true);
-
-        $this
-            ->offsetGet('foo')
-            ->shouldReturn('bar');
-
-        $this
-            ->offsetSet('bar', 'rab');
-
-        $this
-            ->offsetGet('bar')
-            ->shouldReturn('rab');
-
-        $this
-            ->offsetUnset('bar');
-
-        $this
-            ->offsetExists('bar')
-            ->shouldReturn(false);
     }
 
     public function let()
