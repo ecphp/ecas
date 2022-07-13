@@ -5,7 +5,7 @@
     "type": "library",
     "require": {
         "php": ">= 7.4",
-        "ecphp/cas-lib": "dev-refactor/pass-the-request-to-each-methods"
+        "ecphp/cas-lib": "^2"
     },
     "require-dev": {
         "ext-xdebug": "*",
@@ -39,7 +39,6 @@
         "changelog-unreleased": "auto-changelog -c .auto-changelog -u",
         "changelog-version": "auto-changelog -c .auto-changelog -v",
         "grumphp": "./vendor/bin/grumphp run",
-        "phpinsights": "./vendor/bin/phpinsights analyse src/",
         "phpspec": "./vendor/bin/phpspec run"
     }
 }
