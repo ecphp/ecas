@@ -5,7 +5,7 @@
     "type": "library",
     "require": {
         "php": ">= 7.4",
-        "ecphp/cas-lib": "^2"
+        "ecphp/cas-lib": "dev-master"
     },
     "require-dev": {
         "ext-xdebug": "*",
@@ -21,6 +21,8 @@
         "symfony/cache": "^4.4 || ^5",
         "symfony/http-client": "^4.4 || ^5"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "EcPhp\\Ecas\\": "src/"
