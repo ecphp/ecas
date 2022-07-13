@@ -4,10 +4,11 @@
     "license": "BSD-3-Clause",
     "type": "library",
     "require": {
-        "php": ">= 7.1.3",
-        "ecphp/cas-lib": "1.1.*"
+        "php": ">= 7.4",
+        "ecphp/cas-lib": "dev-refactor/pass-the-request-to-each-methods"
     },
     "require-dev": {
+        "ext-xdebug": "*",
         "ecphp/php-conventions": "^1",
         "friends-of-phpspec/phpspec-code-coverage": "^6",
         "infection/infection": "^0.25",

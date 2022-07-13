@@ -12,8 +12,9 @@ declare(strict_types=1);
 namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\Configuration\Properties;
-use EcPhp\CasLib\Configuration\PropertiesInterface;
+use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
 use InvalidArgumentException;
+use ReturnTypeWillChange;
 
 use function array_key_exists;
 use function is_string;
@@ -40,11 +41,8 @@ final class EcasProperties implements PropertiesInterface
     {
         $properties = $casProperties->all();
 
-        $properties['protocol']['serviceValidate']['allowed_parameters'][] = 'userDetails';
-        $properties['protocol']['proxyValidate']['allowed_parameters'][] = 'userDetails';
         $properties['protocol']['serviceValidate']['default_parameters']['format'] = 'XML';
         $properties['protocol']['proxyValidate']['default_parameters']['format'] = 'XML';
-        $properties['protocol']['login']['allowed_parameters'][] = 'authenticationLevel';
         $properties['protocol']['login']['default_parameters']['authenticationLevel'] = $properties['protocol']['login']['default_parameters']['authenticationLevel'] ?? self::AUTHENTICATION_LEVEL_BASIC;
 
         if (false === is_string($properties['protocol']['login']['default_parameters']['authenticationLevel'])) {
@@ -66,7 +64,8 @@ final class EcasProperties implements PropertiesInterface
     /**
      * @param mixed $offset
      */
-    public function offsetExists($offset)
+    #[ReturnTypeWillChange]
+    public function offsetExists($offset): bool
     {
         return $this->properties->offsetExists($offset);
     }
@@ -74,6 +73,7 @@ final class EcasProperties implements PropertiesInterface
     /**
      * @param mixed $offset
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->properties->offsetGet($offset);
@@ -83,7 +83,8 @@ final class EcasProperties implements PropertiesInterface
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value)
+    #[ReturnTypeWillChange]
+    public function offsetSet($offset, $value): void
     {
         $this->properties->offsetSet($offset, $value);
     }
@@ -91,7 +92,8 @@ final class EcasProperties implements PropertiesInterface
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    #[ReturnTypeWillChange]
+    public function offsetUnset($offset): void
     {
         $this->properties->offsetUnset($offset);
     }

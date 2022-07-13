@@ -12,8 +12,9 @@ declare(strict_types=1);
 namespace spec\EcPhp\Ecas;
 
 use EcPhp\CasLib\Configuration\Properties as CasProperties;
-use EcPhp\CasLib\Configuration\PropertiesInterface;
+use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
 use EcPhp\Ecas\EcasProperties;
+use Exception;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
@@ -23,9 +24,14 @@ class CasHelper
     {
         $callback = static function ($method, $url, $options) {
             $body = '';
-            $info = [];
+            $info = [
+                'response_headers' => [
+                    'Content-Type' => 'application/xml',
+                ],
+            ];
 
             switch ($url) {
+                case 'http://local/cas/serviceValidate?format=XML&service=service&ticket=ticket':
                 case 'http://local/cas/serviceValidate?service=service&ticket=ticket':
                 case 'http://local/cas/serviceValidate?ticket=ST-ticket&service=http%3A%2F%2Ffrom':
                 case 'http://local/cas/serviceValidate?ticket=ST-ticket&service=http%3A%2F%2Flocal%2Fcas%2FserviceValidate%3Fservice%3Dservice':
@@ -72,7 +78,7 @@ class CasHelper
 
                     break;
 
-                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_feature_success':
+                case 'http://local/cas/serviceValidate?format=XML&service=service&ticket=authenticationLevel_feature_success':
                     $body = <<< 'EOF'
                         <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
                          <cas:authenticationSuccess>
@@ -87,7 +93,7 @@ class CasHelper
 
                     break;
 
-                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_high':
+                case 'http://local/cas/serviceValidate?format=XML&service=service&ticket=authenticationLevel_high':
                     $body = <<< 'EOF'
                         <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
                             <cas:authenticationSuccess>
@@ -102,7 +108,7 @@ class CasHelper
 
                     break;
 
-                case 'http://local/cas/serviceValidate?service=service&ticket=authenticationLevel_basic':
+                case 'http://local/cas/serviceValidate?format=XML&service=service&ticket=authenticationLevel_basic':
                     $body = <<< 'EOF'
                         <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
                             <cas:authenticationSuccess>
@@ -197,6 +203,11 @@ class CasHelper
                         EOF;
 
                     break;
+
+                default:
+                    throw new Exception(sprintf('URL %s is not defined in the HTTP mock client.', $url));
+
+                    break;
             }
 
             return new MockResponse($body, $info);
@@ -213,51 +224,27 @@ class CasHelper
                 'protocol' => [
                     'login' => [
                         'path' => '/login',
-                        'allowed_parameters' => [
-                            'service',
-                            'custom',
-                            'renew',
-                            'gateway',
-                        ],
                         'default_parameters' => [
                             'authenticationLevel' => 'MEDIUM',
                         ],
                     ],
                     'logout' => [
                         'path' => '/logout',
-                        'allowed_parameters' => [
-                            'service',
-                            'custom',
-                        ],
                     ],
                     'serviceValidate' => [
                         'path' => '/serviceValidate',
-                        'allowed_parameters' => [
-                            'ticket',
-                            'service',
-                            'custom',
-                        ],
                         'default_parameters' => [
                             'format' => 'XML',
                         ],
                     ],
                     'proxyValidate' => [
                         'path' => '/proxyValidate',
-                        'allowed_parameters' => [
-                            'ticket',
-                            'service',
-                            'custom',
-                        ],
                         'default_parameters' => [
                             'format' => 'XML',
                         ],
                     ],
                     'proxy' => [
                         'path' => '/proxy',
-                        'allowed_parameters' => [
-                            'targetService',
-                            'pgt',
-                        ],
                     ],
                 ],
             ])

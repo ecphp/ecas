@@ -12,14 +12,19 @@ declare(strict_types=1);
 namespace spec\EcPhp\Ecas;
 
 use EcPhp\CasLib\Cas;
-use EcPhp\CasLib\Introspection\Introspector;
-use EcPhp\Ecas\Introspection\EcasIntrospector;
+use EcPhp\CasLib\Response\CasResponseBuilder;
+use EcPhp\CasLib\Response\Factory\AuthenticationFailureFactory;
+use EcPhp\CasLib\Response\Factory\ProxyFactory;
+use EcPhp\CasLib\Response\Factory\ProxyFailureFactory;
+use EcPhp\CasLib\Response\Factory\ServiceValidateFactory as FactoryServiceValidateFactory;
+use EcPhp\Ecas\Response\Factory\ServiceValidateFactory;
+use Ergebnis\Http\Method;
+use Exception;
+use loophp\psr17\Psr17;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\ServerRequest;
-use Nyholm\Psr7Server\ServerRequestCreator;
 use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\NullLogger;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpClient\Psr18Client;
 
@@ -29,145 +34,174 @@ class EcasSpec extends ObjectBehavior
 {
     public function it_can_do_a_service_ticket_validation_and_make_sure_authenticationLevel_is_correct()
     {
-        $from = 'http://local/';
-        $request = new ServerRequest('GET', $from);
+        $request = new ServerRequest(
+            Method::GET,
+            'http://local/'
+        );
 
         $this
-            ->withServerRequest($request)
-            ->requestTicketValidation(['service' => 'service', 'ticket' => 'authenticationLevel_feature_success'])
+            ->requestTicketValidation(
+                $request,
+                ['service' => 'service', 'ticket' => 'authenticationLevel_feature_success']
+            )
             ->shouldBeAnInstanceOf(ResponseInterface::class);
 
         $this
-            ->withServerRequest($request)
-            ->requestTicketValidation(['service' => 'service', 'ticket' => 'authenticationLevel_high'])
+            ->requestTicketValidation(
+                $request,
+                ['service' => 'service', 'ticket' => 'authenticationLevel_high']
+            )
             ->shouldBeAnInstanceOf(ResponseInterface::class);
 
         $this
-            ->withServerRequest($request)
-            ->requestTicketValidation(['service' => 'service', 'ticket' => 'authenticationLevel_basic'])
-            ->shouldBeNull();
+            ->shouldThrow(Exception::class)
+            ->during('requestTicketValidation', [
+                $request,
+                ['service' => 'service', 'ticket' => 'authenticationLevel_basic'],
+            ]);
     }
 
     public function it_can_do_a_service_ticket_validation_with_a_request_header()
     {
-        $from = 'http://local/';
-        $request = new ServerRequest('GET', $from, ['Authorization' => 'cas_ticket ticket']);
+        $request = new ServerRequest(
+            Method::GET,
+            'http://local/',
+            ['Authorization' => 'cas_ticket ticket']
+        );
 
         $this
-            ->withServerRequest($request)
-            ->requestTicketValidation(['service' => 'service'])
+            ->requestTicketValidation($request, ['service' => 'service'])
             ->shouldBeAnInstanceOf(ResponseInterface::class);
 
-        $from = 'http://local/';
-        $request = new ServerRequest('GET', $from);
+        $request = new ServerRequest(
+            Method::GET,
+            'http://local/'
+        );
 
         $this
-            ->withServerRequest($request)
-            ->requestTicketValidation(['service' => 'service'])
-            ->shouldBeNull();
+            ->shouldThrow(Exception::class)
+            ->during('requestTicketValidation', [$request, ['service' => 'service']]);
 
         // Make sure that if a service is passed through the argument, it is
         // not overridden.
-        $from = 'http://local/';
-        $request = new ServerRequest('GET', $from, ['Authorization' => 'cas_ticket foo']);
+        $request = new ServerRequest(
+            Method::GET,
+            'http://local/',
+            ['Authorization' => 'cas_ticket foo']
+        );
 
         $this
-            ->withServerRequest($request)
-            ->requestTicketValidation(['service' => 'service', 'ticket' => 'ticket'])
+            ->requestTicketValidation($request, ['service' => 'service', 'ticket' => 'ticket'])
             ->shouldBeAnInstanceOf(ResponseInterface::class);
     }
 
     public function it_is_returning_xml_on_the_proxycallback()
     {
-        $request = new ServerRequest('GET', 'http://local/proxycallback?pgtId=pgtId&pgtIou=pgtIou');
+        $request = new ServerRequest(
+            Method::GET,
+            'http://local/proxycallback?pgtId=pgtId&pgtIou=pgtIou'
+        );
 
         $this
-            ->withServerRequest($request)
-            ->handleProxyCallback()
+            ->handleProxyCallback($request)
             ->shouldReturnAnInstanceOf(ResponseInterface::class);
 
         $this
-            ->withServerRequest($request)
-            ->handleProxyCallback()
+            ->handleProxyCallback($request)
             ->getBody()
             ->__toString()
             ->shouldReturn('<?xml version="1.0" encoding="utf-8"?><proxySuccess xmlns="http://www.yale.edu/tp/casClient" />');
 
         $this
-            ->withServerRequest($request)
-            ->handleProxyCallback()
+            ->handleProxyCallback($request)
             ->getStatusCode()
             ->shouldReturn(200);
 
-        $request = new ServerRequest('GET', 'http://local/proxycallback?pgtId=pgtId');
+        $request = new ServerRequest(
+            Method::GET,
+            'http://local/proxycallback?pgtId=pgtId'
+        );
 
         $this
-            ->withServerRequest($request)
-            ->handleProxyCallback()
-            ->getStatusCode()
-            ->shouldReturn(500);
+            ->shouldThrow(Exception::class)
+            ->during('handleProxyCallback', [$request]);
 
-        $request = new ServerRequest('GET', 'http://local/proxycallback?pgtIou=pgtIou');
+        $request = new ServerRequest(
+            Method::GET,
+            'http://local/proxycallback?pgtIou=pgtIou'
+        );
 
         $this
-            ->withServerRequest($request)
-            ->handleProxyCallback()
-            ->getStatusCode()
-            ->shouldReturn(500);
+            ->shouldThrow(Exception::class)
+            ->during('handleProxyCallback', [$request]);
     }
 
     public function it_support_authentication_when_a_ticket_is_in_the_request_header()
     {
-        $from = 'http://local/';
-        $request = new ServerRequest('GET', $from, ['Authorization' => 'cas_ticket ticket']);
+        $request = new ServerRequest(
+            Method::GET,
+            'http://local/',
+            ['Authorization' => 'cas_ticket ticket']
+        );
 
         $this
-            ->withServerRequest($request)
-            ->supportAuthentication()
+            ->supportAuthentication($request)
             ->shouldReturn(true);
 
-        $from = 'http://local/';
-        $request = new ServerRequest('GET', $from);
+        $request = new ServerRequest(
+            'GET',
+            'http://local/',
+        );
 
         $this
-            ->withServerRequest($request)
-            ->supportAuthentication()
+            ->supportAuthentication($request)
             ->shouldReturn(false);
 
         // Make sure that if a service is passed through the argument, it is
         // not overridden.
-        $from = 'http://local/';
-        $request = new ServerRequest('GET', $from, ['Authorization' => 'cas_ticket foo']);
+        $request = new ServerRequest(
+            'GET',
+            'http://local/',
+            ['Authorization' => 'cas_ticket foo']
+        );
 
         $this
-            ->withServerRequest($request)
-            ->supportAuthentication(['service' => 'service', 'ticket' => 'ticket'])
+            ->supportAuthentication($request, ['service' => 'service', 'ticket' => 'ticket'])
             ->shouldReturn(true);
     }
 
     public function let()
     {
         $psr17Factory = new Psr17Factory();
-        $creator = new ServerRequestCreator(
-            $psr17Factory, // ServerRequestFactory
-            $psr17Factory, // UriFactory
-            $psr17Factory, // UploadedFileFactory
-            $psr17Factory  // StreamFactory
+        $psr17 = new Psr17(
+            $psr17Factory,
+            $psr17Factory,
+            $psr17Factory,
+            $psr17Factory,
+            $psr17Factory,
+            $psr17Factory
         );
+
+        $properties = CasHelper::getTestProperties();
 
         $cas = new Cas(
-            $creator->fromGlobals(),
-            CasHelper::getTestProperties(),
+            $properties,
             new Psr18Client(CasHelper::getHttpClientMock()),
-            $psr17Factory,
-            $psr17Factory,
-            $psr17Factory,
-            $psr17Factory,
+            $psr17,
             new ArrayAdapter(),
-            new NullLogger(),
-            new EcasIntrospector(new Introspector())
+            new CasResponseBuilder(
+                new AuthenticationFailureFactory(),
+                new ProxyFactory(),
+                new ProxyFailureFactory(),
+                new ServiceValidateFactory(new FactoryServiceValidateFactory(), $psr17)
+            )
         );
 
-        $this->beConstructedWith($cas, $psr17Factory);
+        $this
+            ->beConstructedWith(
+                $cas,
+                $properties,
+                $psr17
+            );
     }
 }
