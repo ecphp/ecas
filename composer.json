@@ -11,7 +11,7 @@
         "ext-xdebug": "*",
         "ecphp/php-conventions": "^1",
         "friends-of-phpspec/phpspec-code-coverage": "^6",
-        "infection/infection": "^0.25",
+        "infection/infection": "^0.25 || ^0.26",
         "infection/phpspec-adapter": "^0.2",
         "monolog/monolog": "^1.0",
         "nyholm/psr7": "^1.2.1",
