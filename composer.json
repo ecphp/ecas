@@ -5,7 +5,7 @@
     "type": "library",
     "require": {
         "php": ">= 8.1",
-        "ecphp/cas-lib": "dev-master"
+        "ecphp/cas-lib": "^2"
     },
     "require-dev": {
         "ext-pcov": "*",
