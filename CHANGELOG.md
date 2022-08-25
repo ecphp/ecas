@@ -5,7 +5,52 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.3](https://github.com/ecphp/ecas/compare/2.1.2...2.1.3)
+## [3.0.0](https://github.com/ecphp/ecas/compare/2.2.0...3.0.0)
+
+### Commits
+
+- chore: Update `composer.json`. [`47a1c52`](https://github.com/ecphp/ecas/commit/47a1c5272c2ed4193c8d59c97cf6b8290fdfc036)
+- chore: Update static files. [`d19f3ca`](https://github.com/ecphp/ecas/commit/d19f3ca4b1b746cb59e630017508dbb2875e23a4)
+- chore: Update Infection configuration. [`9b4f0e3`](https://github.com/ecphp/ecas/commit/9b4f0e3e5e1627a140d597ee5a58eb4d0da4c438)
+- fix: Autofix code style. [`7835c28`](https://github.com/ecphp/ecas/commit/7835c28295b17c2fc17580068f8fb096aff5c8b0)
+- chore: Update `composer.json`. [`f20b319`](https://github.com/ecphp/ecas/commit/f20b3193ff50e2bd303e675503e3c7cf5c0cd0a7)
+- chore: Set `cas-lib` version to `dev-master`. [`b17e946`](https://github.com/ecphp/ecas/commit/b17e946a19e832a411caaddb9025dbec487870b0)
+- chore: Bump `cas-lib` version. [`862b746`](https://github.com/ecphp/ecas/commit/862b74628cb8d5851e9814e0c44176ea40ddba9a)
+- refactor: Upgrade codebase for `ecphp/cas-lib` upcoming version 2. [`eafd09e`](https://github.com/ecphp/ecas/commit/eafd09ec9194d14be73e7eb6fcc3e2ccbe8712b3)
+- tests: Update tests accordingly. [`ff5c98f`](https://github.com/ecphp/ecas/commit/ff5c98f76fdc02e3f605ea858c6f6ec9b1bab3dd)
+- refactor: Upgrade codebase for `ecphp/cas-lib` upcoming version 2. [`f16dcff`](https://github.com/ecphp/ecas/commit/f16dcffe5a7430775baeac69c4514ef4ae6c37e0)
+- chore: Update `composer.json`. [`b9e2152`](https://github.com/ecphp/ecas/commit/b9e2152551c8bcae1d93f7759603bc65407ed744)
+- chore: Update `PSalm` configuration. [`40c0390`](https://github.com/ecphp/ecas/commit/40c03905ee775c389e645088a21f577a906fef64)
+
+## [2.2.0](https://github.com/ecphp/ecas/compare/2.1.3...2.2.0) - 2022-08-25
+
+### Merged
+
+- Update friends-of-phpspec/phpspec-code-coverage requirement from ^4.3.2 to ^4.3.2 || ^6.0.0 [`#19`](https://github.com/ecphp/ecas/pull/19)
+- build(deps-dev): update phpstan/phpstan-strict-rules requirement from ^0.12 to ^0.12 || ^1.0 [`#22`](https://github.com/ecphp/ecas/pull/22)
+- build(deps): bump actions/cache from 3.0.1 to 3.0.4 [`#29`](https://github.com/ecphp/ecas/pull/29)
+- build(deps): bump actions/cache from 2.1.7 to 3.0.1 [`#25`](https://github.com/ecphp/ecas/pull/25)
+- build(deps): bump actions/cache from 2.1.6 to 2.1.7 [`#23`](https://github.com/ecphp/ecas/pull/23)
+
+### Commits
+
+- docs: Update changelog. [`55bc0e2`](https://github.com/ecphp/ecas/commit/55bc0e2cd49c7977477a086ca7e919ca706567ae)
+- chore: Update `.gitattributes`. [`3eb042b`](https://github.com/ecphp/ecas/commit/3eb042b021107efc9f9ea38b13e976589c2dcb1e)
+- ci: Update workflows. [`1371f2a`](https://github.com/ecphp/ecas/commit/1371f2a55a943f9633d8b351912074cfc7a2902b)
+- ci: Update workflows. [`5c20082`](https://github.com/ecphp/ecas/commit/5c200825255566ca82128a10cceb69681b7d8261)
+- tests: Fix PHPSpec tests. [`35feeff`](https://github.com/ecphp/ecas/commit/35feeff5aaf0d9f38b18b71deacd2fcb8a44a96b)
+- chore: Update psalm configuration. [`d36da82`](https://github.com/ecphp/ecas/commit/d36da823374932a097ede6a56bb23a02c96fdb13)
+- chore: Drop older versions of PHP and Symfony. [`bdded01`](https://github.com/ecphp/ecas/commit/bdded018f2ff9537b800982fb04440805a9be6dc)
+- chore: Fix dev dependencies version. [`a680658`](https://github.com/ecphp/ecas/commit/a68065830ebd4c20d181ab29c56a6d871e0f4c6b)
+- ci: Update Github Action configuration. [`dea679e`](https://github.com/ecphp/ecas/commit/dea679ec8139d3314753ac193e3f46f88413c93e)
+- fix: Update Scrutinizer configuration. [`91f735d`](https://github.com/ecphp/ecas/commit/91f735d672265bcbca53a2f27ca9227e42874992)
+- chore: Remove Docker stuff. [`a07f929`](https://github.com/ecphp/ecas/commit/a07f92983d1bbecd490eb1a65262a79348c0d740)
+- chore: Update licence holder. [`0266388`](https://github.com/ecphp/ecas/commit/0266388ef51ded16379a464c5087a533f264249f)
+- chore: Normalize `composer.json`. [`d40c004`](https://github.com/ecphp/ecas/commit/d40c004672cd57687d5fcd9062beb143373a6f23)
+- build(deps-dev): update phpstan/phpstan-strict-rules requirement || ^1.0 [`4ddcade`](https://github.com/ecphp/ecas/commit/4ddcade174a941e20043be4bb2343ace5f3f4df3)
+- Update friends-of-phpspec/phpspec-code-coverage requirement || ^6.0.0 [`2525759`](https://github.com/ecphp/ecas/commit/2525759b5a1ec0d31633b555770b1c338989d0d2)
+
+## [2.1.3](https://github.com/ecphp/ecas/compare/2.1.2...2.1.3) - 2021-10-13
 
 ### Merged
 
@@ -13,6 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Commits
 
+- docs: Add/update CHANGELOG. [`4a0f228`](https://github.com/ecphp/ecas/commit/4a0f228e718062c62974905e44c344c200cb4d5e)
 - refactor: Minor type/variable update. [`0b35851`](https://github.com/ecphp/ecas/commit/0b3585114f1a97df9622f2bf68809773187503b6)
 - tests: Update tests accordingly. [`f14e71f`](https://github.com/ecphp/ecas/commit/f14e71f1b1f7798442eaa6d9963ee9fae28d7de8)
 - refactor: Update based on ECAS documentation. [`a6b04c8`](https://github.com/ecphp/ecas/commit/a6b04c8a71725a6dbf10969260d40adea6feadc0)
