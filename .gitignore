@@ -6,3 +6,4 @@ grumphp.yml
 phpspec.yml
 /build/
 .php_cs.cache
+.envrc
