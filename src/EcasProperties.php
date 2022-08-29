@@ -66,7 +66,7 @@ final class EcasProperties implements PropertiesInterface
     /**
      * @param mixed $offset
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->properties->offsetExists($offset);
     }
@@ -74,7 +74,7 @@ final class EcasProperties implements PropertiesInterface
     /**
      * @param mixed $offset
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->properties->offsetGet($offset);
     }
@@ -83,7 +83,7 @@ final class EcasProperties implements PropertiesInterface
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->properties->offsetSet($offset, $value);
     }
@@ -91,7 +91,7 @@ final class EcasProperties implements PropertiesInterface
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->properties->offsetUnset($offset);
     }

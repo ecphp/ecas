@@ -24,20 +24,11 @@ use Throwable;
 
 final class Ecas implements CasInterface
 {
-    /**
-     * @var \EcPhp\CasLib\CasInterface
-     */
-    private $cas;
+    private CasInterface $cas;
 
-    /**
-     * @var \Psr\Http\Message\ServerRequestInterface
-     */
-    private $serverRequest;
+    private ServerRequestInterface $serverRequest;
 
-    /**
-     * @var \Psr\Http\Message\StreamFactoryInterface
-     */
-    private $streamFactory;
+    private StreamFactoryInterface $streamFactory;
 
     public function __construct(CasInterface $cas, StreamFactoryInterface $streamFactory)
     {

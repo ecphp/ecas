@@ -20,10 +20,7 @@ use function in_array;
 
 final class EcasIntrospector implements IntrospectorInterface
 {
-    /**
-     * @var \EcPhp\CasLib\Introspection\Contract\IntrospectorInterface
-     */
-    private $introspector;
+    private IntrospectorInterface $introspector;
 
     public function __construct(IntrospectorInterface $introspector)
     {

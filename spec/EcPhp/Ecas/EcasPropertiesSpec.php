@@ -54,28 +54,6 @@ class EcasPropertiesSpec extends ObjectBehavior
                     ],
                 ]
             );
-
-        $this
-            ->offsetExists('foo')
-            ->shouldReturn(true);
-
-        $this
-            ->offsetGet('foo')
-            ->shouldReturn('bar');
-
-        $this
-            ->offsetSet('bar', 'rab');
-
-        $this
-            ->offsetGet('bar')
-            ->shouldReturn('rab');
-
-        $this
-            ->offsetUnset('bar');
-
-        $this
-            ->offsetExists('bar')
-            ->shouldReturn(false);
     }
 
     public function let()
