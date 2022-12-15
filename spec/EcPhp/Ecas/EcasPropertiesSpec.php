@@ -32,7 +32,7 @@ class EcasPropertiesSpec extends ObjectBehavior
                                 0 => 'userDetails',
                             ],
                             'default_parameters' => [
-                                'format' => 'XML',
+                                'format' => 'JSON',
                             ],
                         ],
                         'proxyValidate' => [
@@ -40,7 +40,7 @@ class EcasPropertiesSpec extends ObjectBehavior
                                 0 => 'userDetails',
                             ],
                             'default_parameters' => [
-                                'format' => 'XML',
+                                'format' => 'JSON',
                             ],
                         ],
                         'login' => [

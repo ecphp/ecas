@@ -29,8 +29,7 @@ class EcasSpec extends ObjectBehavior
 {
     public function it_can_do_a_service_ticket_validation_and_make_sure_authenticationLevel_is_correct()
     {
-        $from = 'http://local/';
-        $request = new ServerRequest('GET', $from);
+        $request = new ServerRequest('GET', 'http://local/');
 
         $this
             ->withServerRequest($request)
