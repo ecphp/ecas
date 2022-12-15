@@ -20,8 +20,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Throwable;
 
-// phpcs:disable Generic.Files.LineLength.TooLong
-
 final class Ecas implements CasInterface
 {
     private CasInterface $cas;
