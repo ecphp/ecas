@@ -5,16 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.3.0](https://code.europa.eu/ecphp/ecas/compare/3.0.0...2.3.0)
+## [2.4.0](https://code.europa.eu/ecphp/ecas/compare/3.0.0...2.4.0)
 
 ### Commits
 
+- fix: use `JSON` instead of `XML` by default [`949a868`](https://code.europa.eu/ecphp/ecas/commit/949a868c483aed805a01d88f14f5851ff23ebbbe)
+- tests: convert `XML` in `JSON` [`8230fe9`](https://code.europa.eu/ecphp/ecas/commit/8230fe95ab9d50fb24583006a78f209c1f2ef31e)
+- nix: upgrade `.envrc` [`2796955`](https://code.europa.eu/ecphp/ecas/commit/2796955331f7e5ee8a1c8bcb5835af74253050a3)
+- docs: Update changelog. [`8d9ef9c`](https://code.europa.eu/ecphp/ecas/commit/8d9ef9cf87f1f7e556b5d18864fb43877d50ab66)
 - chore: Prettify codebase. [`3a0513a`](https://code.europa.eu/ecphp/ecas/commit/3a0513ad25a4ff56470b19a13dfe95633ad715b3)
 - refactor: Update codebase for PHP &gt;= 8.0.2. [`df1b6e8`](https://code.europa.eu/ecphp/ecas/commit/df1b6e86a298f7fff103cf079e63e82d9b75b900)
 - ci: Add `prettier` workflow. [`dec94c6`](https://code.europa.eu/ecphp/ecas/commit/dec94c6f8e993a3460c6b3ac56d74f7ad3e47a4f)
 - chore: Get rid of docker, use Nix. [`f46137d`](https://code.europa.eu/ecphp/ecas/commit/f46137da360405d727597b2ce9344f64a6796843)
 
-## [3.0.0](https://code.europa.eu/ecphp/ecas/compare/2.2.0...3.0.0) - 2022-08-25
+## [3.0.0](https://code.europa.eu/ecphp/ecas/compare/2.3.0...3.0.0) - 2022-08-25
+
+### Merged
+
+- Update friends-of-phpspec/phpspec-code-coverage requirement from ^4.3.2 to ^4.3.2 || ^6.0.0 [`#19`](https://code.europa.eu/ecphp/ecas/pull/19)
+- build(deps-dev): update phpstan/phpstan-strict-rules requirement from ^0.12 to ^0.12 || ^1.0 [`#22`](https://code.europa.eu/ecphp/ecas/pull/22)
+- build(deps): bump actions/cache from 3.0.1 to 3.0.4 [`#29`](https://code.europa.eu/ecphp/ecas/pull/29)
 
 ### Commits
 
@@ -26,10 +36,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - chore: Update `composer.json`. [`f20b319`](https://code.europa.eu/ecphp/ecas/commit/f20b3193ff50e2bd303e675503e3c7cf5c0cd0a7)
 - chore: Set `cas-lib` version to `dev-master`. [`b17e946`](https://code.europa.eu/ecphp/ecas/commit/b17e946a19e832a411caaddb9025dbec487870b0)
 - chore: Bump `cas-lib` version. [`862b746`](https://code.europa.eu/ecphp/ecas/commit/862b74628cb8d5851e9814e0c44176ea40ddba9a)
+- chore: Fix dev dependencies version. [`a680658`](https://code.europa.eu/ecphp/ecas/commit/a68065830ebd4c20d181ab29c56a6d871e0f4c6b)
+- ci: Update Github Action configuration. [`dea679e`](https://code.europa.eu/ecphp/ecas/commit/dea679ec8139d3314753ac193e3f46f88413c93e)
+- fix: Update Scrutinizer configuration. [`91f735d`](https://code.europa.eu/ecphp/ecas/commit/91f735d672265bcbca53a2f27ca9227e42874992)
+- chore: Remove Docker stuff. [`a07f929`](https://code.europa.eu/ecphp/ecas/commit/a07f92983d1bbecd490eb1a65262a79348c0d740)
 - refactor: Upgrade codebase for `ecphp/cas-lib` upcoming version 2. [`eafd09e`](https://code.europa.eu/ecphp/ecas/commit/eafd09ec9194d14be73e7eb6fcc3e2ccbe8712b3)
 - tests: Update tests accordingly. [`ff5c98f`](https://code.europa.eu/ecphp/ecas/commit/ff5c98f76fdc02e3f605ea858c6f6ec9b1bab3dd)
 - refactor: Upgrade codebase for `ecphp/cas-lib` upcoming version 2. [`f16dcff`](https://code.europa.eu/ecphp/ecas/commit/f16dcffe5a7430775baeac69c4514ef4ae6c37e0)
 - chore: Update `composer.json`. [`b9e2152`](https://code.europa.eu/ecphp/ecas/commit/b9e2152551c8bcae1d93f7759603bc65407ed744)
+- build(deps-dev): update phpstan/phpstan-strict-rules requirement || ^1.0 [`4ddcade`](https://code.europa.eu/ecphp/ecas/commit/4ddcade174a941e20043be4bb2343ace5f3f4df3)
+- Update friends-of-phpspec/phpspec-code-coverage requirement || ^6.0.0 [`2525759`](https://code.europa.eu/ecphp/ecas/commit/2525759b5a1ec0d31633b555770b1c338989d0d2)
+
+## [2.3.0](https://code.europa.eu/ecphp/ecas/compare/2.2.0...2.3.0) - 2022-08-29
+
+### Commits
+
+- docs: Update changelog. [`8d9ef9c`](https://code.europa.eu/ecphp/ecas/commit/8d9ef9cf87f1f7e556b5d18864fb43877d50ab66)
+- chore: Prettify codebase. [`3a0513a`](https://code.europa.eu/ecphp/ecas/commit/3a0513ad25a4ff56470b19a13dfe95633ad715b3)
+- refactor: Update codebase for PHP &gt;= 8.0.2. [`df1b6e8`](https://code.europa.eu/ecphp/ecas/commit/df1b6e86a298f7fff103cf079e63e82d9b75b900)
+- ci: Add `prettier` workflow. [`dec94c6`](https://code.europa.eu/ecphp/ecas/commit/dec94c6f8e993a3460c6b3ac56d74f7ad3e47a4f)
+- chore: Get rid of docker, use Nix. [`f46137d`](https://code.europa.eu/ecphp/ecas/commit/f46137da360405d727597b2ce9344f64a6796843)
 - chore: Update `PSalm` configuration. [`40c0390`](https://code.europa.eu/ecphp/ecas/commit/40c03905ee775c389e645088a21f577a906fef64)
 
 ## [2.2.0](https://code.europa.eu/ecphp/ecas/compare/2.1.3...2.2.0) - 2022-08-25
