@@ -5,10 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.0](https://github.com/ecphp/ecas/compare/2.2.0...3.0.0)
+## [3.0.1](https://github.com/ecphp/ecas/compare/3.0.0...3.0.1)
+
+### Merged
+
+- build(deps): bump cachix/install-nix-action from 17 to 18 [`#35`](https://github.com/ecphp/ecas/pull/35)
+- build(deps-dev): update monolog/monolog requirement from ^1.0 to ^1.0 || ^3.0 [`#34`](https://github.com/ecphp/ecas/pull/34)
 
 ### Commits
 
+- ci: add environment variable [`ff5c5dd`](https://github.com/ecphp/ecas/commit/ff5c5dd1f649c3e45fcbbc2bf9e656e9bee2572b)
+- chore: update LICENSE file [`f82079e`](https://github.com/ecphp/ecas/commit/f82079e046955fcccc6d8da23a158eeb31e5d25d)
+- style: autofix file style [`e20b6a7`](https://github.com/ecphp/ecas/commit/e20b6a739300cf842d0fdd1b291c4fe06eab9ed5)
+- ci: update Github workflows syntax [`4fe701c`](https://github.com/ecphp/ecas/commit/4fe701c27af195360a9a537233a542a5e58ea671)
+- refactor: switch from `XML` to `JSON` [`dd803a0`](https://github.com/ecphp/ecas/commit/dd803a0cbce579963e1fe294463bf82616101386)
+- chore: update default `nix` environment [`1f9e657`](https://github.com/ecphp/ecas/commit/1f9e657447c144b3de8589ba2f940a63e07efb9d)
+- docs: fix README badge [`7cf9d57`](https://github.com/ecphp/ecas/commit/7cf9d5725387f36872c21c331bd0c6597fa38d02)
+- chore: Prettify the codebase. [`77e9a39`](https://github.com/ecphp/ecas/commit/77e9a39c3117967b2521cef4a344594bbf39b469)
+- chore: Prettify the codebase. [`2612df8`](https://github.com/ecphp/ecas/commit/2612df8c43d07588e73c79086ef756d2ff7f458f)
+- chore: Add `prettier` checks and fixes. [`aaff1c7`](https://github.com/ecphp/ecas/commit/aaff1c72d720bb65560cf0c039112eab62018a5b)
+- build(deps-dev): update monolog/monolog requirement || ^3.0 [`e5262a2`](https://github.com/ecphp/ecas/commit/e5262a24df3d1a8871e3fa9860ac3bb91be39918)
+
+## [3.0.0](https://github.com/ecphp/ecas/compare/2.4.0...3.0.0) - 2022-08-25
+
+### Merged
+
+- Update friends-of-phpspec/phpspec-code-coverage requirement from ^4.3.2 to ^4.3.2 || ^6.0.0 [`#19`](https://github.com/ecphp/ecas/pull/19)
+- build(deps-dev): update phpstan/phpstan-strict-rules requirement from ^0.12 to ^0.12 || ^1.0 [`#22`](https://github.com/ecphp/ecas/pull/22)
+- build(deps): bump actions/cache from 3.0.1 to 3.0.4 [`#29`](https://github.com/ecphp/ecas/pull/29)
+
+### Commits
+
+- docs: Update changelog. [`34a90ff`](https://github.com/ecphp/ecas/commit/34a90ff7d0fb75b1a05062be01ab7a13ecca3e3f)
 - chore: Update `composer.json`. [`47a1c52`](https://github.com/ecphp/ecas/commit/47a1c5272c2ed4193c8d59c97cf6b8290fdfc036)
 - chore: Update static files. [`d19f3ca`](https://github.com/ecphp/ecas/commit/d19f3ca4b1b746cb59e630017508dbb2875e23a4)
 - chore: Update Infection configuration. [`9b4f0e3`](https://github.com/ecphp/ecas/commit/9b4f0e3e5e1627a140d597ee5a58eb4d0da4c438)
@@ -16,10 +44,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - chore: Update `composer.json`. [`f20b319`](https://github.com/ecphp/ecas/commit/f20b3193ff50e2bd303e675503e3c7cf5c0cd0a7)
 - chore: Set `cas-lib` version to `dev-master`. [`b17e946`](https://github.com/ecphp/ecas/commit/b17e946a19e832a411caaddb9025dbec487870b0)
 - chore: Bump `cas-lib` version. [`862b746`](https://github.com/ecphp/ecas/commit/862b74628cb8d5851e9814e0c44176ea40ddba9a)
+- chore: Fix dev dependencies version. [`a680658`](https://github.com/ecphp/ecas/commit/a68065830ebd4c20d181ab29c56a6d871e0f4c6b)
+- ci: Update Github Action configuration. [`dea679e`](https://github.com/ecphp/ecas/commit/dea679ec8139d3314753ac193e3f46f88413c93e)
+- fix: Update Scrutinizer configuration. [`91f735d`](https://github.com/ecphp/ecas/commit/91f735d672265bcbca53a2f27ca9227e42874992)
+- chore: Remove Docker stuff. [`a07f929`](https://github.com/ecphp/ecas/commit/a07f92983d1bbecd490eb1a65262a79348c0d740)
 - refactor: Upgrade codebase for `ecphp/cas-lib` upcoming version 2. [`eafd09e`](https://github.com/ecphp/ecas/commit/eafd09ec9194d14be73e7eb6fcc3e2ccbe8712b3)
 - tests: Update tests accordingly. [`ff5c98f`](https://github.com/ecphp/ecas/commit/ff5c98f76fdc02e3f605ea858c6f6ec9b1bab3dd)
 - refactor: Upgrade codebase for `ecphp/cas-lib` upcoming version 2. [`f16dcff`](https://github.com/ecphp/ecas/commit/f16dcffe5a7430775baeac69c4514ef4ae6c37e0)
 - chore: Update `composer.json`. [`b9e2152`](https://github.com/ecphp/ecas/commit/b9e2152551c8bcae1d93f7759603bc65407ed744)
+- build(deps-dev): update phpstan/phpstan-strict-rules requirement || ^1.0 [`4ddcade`](https://github.com/ecphp/ecas/commit/4ddcade174a941e20043be4bb2343ace5f3f4df3)
+- Update friends-of-phpspec/phpspec-code-coverage requirement || ^6.0.0 [`2525759`](https://github.com/ecphp/ecas/commit/2525759b5a1ec0d31633b555770b1c338989d0d2)
+
+## [2.4.0](https://github.com/ecphp/ecas/compare/2.3.0...2.4.0) - 2022-12-15
+
+### Commits
+
+- docs: Update changelog. [`69f92b9`](https://github.com/ecphp/ecas/commit/69f92b90ceb4031301f52732634adea7ebd52216)
+- fix: use `JSON` instead of `XML` by default [`949a868`](https://github.com/ecphp/ecas/commit/949a868c483aed805a01d88f14f5851ff23ebbbe)
+- tests: convert `XML` in `JSON` [`8230fe9`](https://github.com/ecphp/ecas/commit/8230fe95ab9d50fb24583006a78f209c1f2ef31e)
+- nix: upgrade `.envrc` [`2796955`](https://github.com/ecphp/ecas/commit/2796955331f7e5ee8a1c8bcb5835af74253050a3)
+
+## [2.3.0](https://github.com/ecphp/ecas/compare/2.2.0...2.3.0) - 2022-08-29
+
+### Commits
+
+- docs: Update changelog. [`8d9ef9c`](https://github.com/ecphp/ecas/commit/8d9ef9cf87f1f7e556b5d18864fb43877d50ab66)
+- chore: Prettify codebase. [`3a0513a`](https://github.com/ecphp/ecas/commit/3a0513ad25a4ff56470b19a13dfe95633ad715b3)
+- refactor: Update codebase for PHP &gt;= 8.0.2. [`df1b6e8`](https://github.com/ecphp/ecas/commit/df1b6e86a298f7fff103cf079e63e82d9b75b900)
+- ci: Add `prettier` workflow. [`dec94c6`](https://github.com/ecphp/ecas/commit/dec94c6f8e993a3460c6b3ac56d74f7ad3e47a4f)
+- chore: Get rid of docker, use Nix. [`f46137d`](https://github.com/ecphp/ecas/commit/f46137da360405d727597b2ce9344f64a6796843)
 - chore: Update `PSalm` configuration. [`40c0390`](https://github.com/ecphp/ecas/commit/40c03905ee775c389e645088a21f577a906fef64)
 
 ## [2.2.0](https://github.com/ecphp/ecas/compare/2.1.3...2.2.0) - 2022-08-25
