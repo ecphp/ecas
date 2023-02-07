@@ -19,8 +19,6 @@ use ReturnTypeWillChange;
 use function array_key_exists;
 use function is_string;
 
-// phpcs:disable Generic.Files.LineLength.TooLong
-
 final class EcasProperties implements PropertiesInterface
 {
     public const AUTHENTICATION_LEVEL_BASIC = 'BASIC';
@@ -41,8 +39,8 @@ final class EcasProperties implements PropertiesInterface
     {
         $properties = $casProperties->all();
 
-        $properties['protocol']['serviceValidate']['default_parameters']['format'] = 'XML';
-        $properties['protocol']['proxyValidate']['default_parameters']['format'] = 'XML';
+        $properties['protocol']['serviceValidate']['default_parameters']['format'] = 'JSON';
+        $properties['protocol']['proxyValidate']['default_parameters']['format'] = 'JSON';
         $properties['protocol']['login']['default_parameters']['authenticationLevel'] = $properties['protocol']['login']['default_parameters']['authenticationLevel'] ?? self::AUTHENTICATION_LEVEL_BASIC;
 
         if (false === is_string($properties['protocol']['login']['default_parameters']['authenticationLevel'])) {

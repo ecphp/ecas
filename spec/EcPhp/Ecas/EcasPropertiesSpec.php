@@ -29,12 +29,12 @@ class EcasPropertiesSpec extends ObjectBehavior
                     'protocol' => [
                         'serviceValidate' => [
                             'default_parameters' => [
-                                'format' => 'XML',
+                                'format' => 'JSON',
                             ],
                         ],
                         'proxyValidate' => [
                             'default_parameters' => [
-                                'format' => 'XML',
+                                'format' => 'JSON',
                             ],
                         ],
                         'login' => [
