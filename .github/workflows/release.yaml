@@ -2,7 +2,7 @@
 
 name: "Release"
 
-on: # yamllint disable-line rule:truthy
+on:
     push:
         tags:
             - "**"
@@ -19,8 +19,7 @@ jobs:
 
             - name: Determine tag
               id: tag_name
-              run: |
-                  echo ::set-output name=current_version::${GITHUB_REF#refs/tags/}
+              run: echo "current_version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
               shell: bash
 
             - name: Get Changelog Entry
