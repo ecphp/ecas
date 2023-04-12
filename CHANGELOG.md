@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.2](https://github.com/ecphp/ecas/compare/3.0.1...3.0.2)
+## [3.0.3](https://github.com/ecphp/ecas/compare/3.0.2...3.0.3)
+
+### Commits
+
+- Do not normalize anymore JSON responses [`e171f88`](https://github.com/ecphp/ecas/commit/e171f8841fa3a0be3117999adf4ea6b7e6b23ef0)
+
+## [3.0.2](https://github.com/ecphp/ecas/compare/3.0.1...3.0.2) - 2023-04-12
 
 ### Merged
 
@@ -13,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Commits
 
+- docs: Update changelog. [`0afa56c`](https://github.com/ecphp/ecas/commit/0afa56c5916367fe0486ca543ca70376591e95c7)
 - fix: array structure access [`d4ba614`](https://github.com/ecphp/ecas/commit/d4ba614fb67993590011c5495f03894dc8da16d7)
 
 ## [3.0.1](https://github.com/ecphp/ecas/compare/3.0.0...3.0.1) - 2023-02-07
