@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.1](https://github.com/ecphp/ecas/compare/3.0.0...3.0.1)
+## [3.0.2](https://github.com/ecphp/ecas/compare/3.0.1...3.0.2)
+
+### Merged
+
+- build(deps): bump cachix/install-nix-action from 19 to 20 [`#36`](https://github.com/ecphp/ecas/pull/36)
+
+### Commits
+
+- fix: array structure access [`d4ba614`](https://github.com/ecphp/ecas/commit/d4ba614fb67993590011c5495f03894dc8da16d7)
+
+## [3.0.1](https://github.com/ecphp/ecas/compare/3.0.0...3.0.1) - 2023-02-07
 
 ### Merged
 
@@ -14,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Commits
 
+- docs: Update changelog. [`8810cb5`](https://github.com/ecphp/ecas/commit/8810cb562a46ca59a5cd601b5d4444186b71eb41)
 - ci: add environment variable [`ff5c5dd`](https://github.com/ecphp/ecas/commit/ff5c5dd1f649c3e45fcbbc2bf9e656e9bee2572b)
 - chore: update LICENSE file [`f82079e`](https://github.com/ecphp/ecas/commit/f82079e046955fcccc6d8da23a158eeb31e5d25d)
 - style: autofix file style [`e20b6a7`](https://github.com/ecphp/ecas/commit/e20b6a739300cf842d0fdd1b291c4fe06eab9ed5)
