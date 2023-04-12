@@ -13,10 +13,6 @@ namespace spec\EcPhp\Ecas;
 
 use EcPhp\CasLib\Cas;
 use EcPhp\CasLib\Response\CasResponseBuilder;
-use EcPhp\CasLib\Response\Factory\AuthenticationFailureFactory;
-use EcPhp\CasLib\Response\Factory\ProxyFactory;
-use EcPhp\CasLib\Response\Factory\ProxyFailureFactory;
-use EcPhp\CasLib\Response\Factory\ServiceValidateFactory;
 use Ergebnis\Http\Method;
 use Exception;
 use loophp\psr17\Psr17;
