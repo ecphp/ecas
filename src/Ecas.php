@@ -13,7 +13,7 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\Contract\CasInterface;
 use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
-use EcPhp\CasLib\Contract\Response\CasResponseInterface;
+use EcPhp\CasLib\Contract\Handler\HandlerInterface;
 use Exception;
 use loophp\psr17\Psr17Interface;
 use Psr\Http\Message\ResponseInterface;
@@ -106,11 +106,11 @@ final class Ecas implements CasInterface
             $parameters += ['ticket' => $ticket];
         }
 
-        /** @var CasResponseInterface $response */
+        /** @var \EcPhp\CasLib\Contract\Response\Type\ServiceValidate $response */
         $response = $this->cas->requestTicketValidation($request, $parameters);
 
-        $authenticationLevelFromResponse = $response->toArray()['serviceResponse']['authenticationSuccess']['attributes']['authenticationLevel'] ?? EcasProperties::AUTHENTICATION_LEVEL_BASIC;
-        $authenticationLevelFromConfiguration = $this->properties['protocol']['login']['default_parameters']['authenticationLevel'];
+        $authenticationLevelFromResponse = $response->toArray()['serviceResponse']['authenticationSuccess']['authenticationLevel'] ?? EcasProperties::AUTHENTICATION_LEVEL_BASIC;
+        $authenticationLevelFromConfiguration = $this->properties['protocol'][HandlerInterface::TYPE_LOGIN]['default_parameters']['authenticationLevel'];
 
         if (EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromResponse] < EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromConfiguration]) {
             throw new Exception('Unable to validate ticket: invalid authentication level.');
@@ -141,7 +141,7 @@ final class Ecas implements CasInterface
         return (string) preg_replace(
             '/^cas_ticket /i',
             '',
-            $request->getHeaderLine('Authorization') ?? ''
+            $request->getHeaderLine('Authorization')
         );
     }
 }
