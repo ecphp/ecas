@@ -15,10 +15,12 @@ use EcPhp\CasLib\Contract\CasInterface;
 use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
 use EcPhp\CasLib\Contract\Response\CasResponseBuilderInterface;
 use EcPhp\CasLib\Exception\CasException;
+use EcPhp\Ecas\Handler\LoginTransaction;
 use EcPhp\Ecas\Handler\ProxyCallback;
 use EcPhp\Ecas\Handler\RequestTicketValidation;
 use EcPhp\Ecas\Service\Parameters;
 use loophp\psr17\Psr17Interface;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -30,7 +32,8 @@ final class Ecas implements CasInterface
         private readonly CasInterface $cas,
         private readonly PropertiesInterface $properties,
         private readonly Psr17Interface $psr17,
-        private readonly CasResponseBuilderInterface $casResponseBuilder
+        private readonly CasResponseBuilderInterface $casResponseBuilder,
+        private readonly ClientInterface $client,
     ) {
     }
 
@@ -99,9 +102,20 @@ final class Ecas implements CasInterface
             }
         };
 
-        return $this->process(
+        $response = $this->process(
             $request->withAttribute('parameters', $parameters),
             $handler
+        );
+
+        // Do the LoginTransaction feature stuff.
+        return $this->process(
+            $request->withAttribute('response', $response),
+            new LoginTransaction(
+                $this->cas,
+                $this->psr17,
+                $this->casResponseBuilder,
+                $this->client,
+            )
         );
     }
 
@@ -109,6 +123,12 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
+        // To properly implement the decorator pattern, we cannot simply call
+        // $this->cas->method(). This bypasses the $this->process() and does not
+        // adhere to the pattern.
+        // To address this, an anonymous RequestHandler class is used when the
+        // method is not overridden, or a regular class in a separate file when
+        // it is overridden.
         $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
                 private readonly CasInterface $cas,
@@ -143,6 +163,12 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
+        // To properly implement the decorator pattern, we cannot simply call
+        // $this->cas->method(). This bypasses the $this->process() and does not
+        // adhere to the pattern.
+        // To address this, an anonymous RequestHandler class is used when the
+        // method is not overridden, or a regular class in a separate file when
+        // it is overridden.
         $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
                 private readonly CasInterface $cas
@@ -170,6 +196,12 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
+        // To properly implement the decorator pattern, we cannot simply call
+        // $this->cas->method(). This bypasses the $this->process() and does not
+        // adhere to the pattern.
+        // To address this, an anonymous RequestHandler class is used when the
+        // method is not overridden, or a regular class in a separate file when
+        // it is overridden.
         $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
                 private readonly CasInterface $cas

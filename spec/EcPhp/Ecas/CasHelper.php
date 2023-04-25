@@ -14,6 +14,7 @@ namespace spec\EcPhp\Ecas;
 use EcPhp\CasLib\Configuration\Properties as CasProperties;
 use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
 use EcPhp\Ecas\EcasProperties;
+use Error;
 use Exception;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -31,6 +32,31 @@ class CasHelper
             ];
 
             switch ($url) {
+                case 'http://local/cas/login/bad-structure/init':
+                    $body = json_encode([
+                        'foo' => 'bar',
+                    ]);
+
+                    break;
+
+                case 'http://local/cas/login/failure/init':
+                    throw new Error('Test');
+
+                    break;
+
+                case 'http://local/cas/login/init':
+                case 'http://local/cas/login/success/init':
+                case 'http://local/cas/login/success/init?authenticationLevel=MEDIUM&format=JSON&service=http%3A%2F%2Ffoobar%2F':
+                    $body = json_encode([
+                        'loginRequest' => [
+                            'loginRequestSuccess' => [
+                                'loginRequestId' => sprintf('ECAS_LR-%s', $options['body']),
+                            ],
+                        ],
+                    ]);
+
+                    break;
+
                 case 'http://local/cas/serviceValidate?format=JSON&service=service&ticket=ticket':
                 case 'http://local/cas/serviceValidate?service=service&ticket=ticket':
                 case 'http://local/cas/serviceValidate?ticket=ST-ticket&service=http%3A%2F%2Ffrom':
