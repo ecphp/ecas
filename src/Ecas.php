@@ -13,53 +13,62 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\Contract\CasInterface;
 use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
-use EcPhp\CasLib\Contract\Handler\HandlerInterface;
-use Exception;
+use EcPhp\CasLib\Contract\Response\CasResponseBuilderInterface;
+use EcPhp\CasLib\Exception\CasException;
+use EcPhp\Ecas\Handler\ProxyCallback;
+use EcPhp\Ecas\Handler\RequestTicketValidation;
+use EcPhp\Ecas\Service\Parameters;
 use loophp\psr17\Psr17Interface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Throwable;
 
 final class Ecas implements CasInterface
 {
-    private CasInterface $cas;
-
-    private PropertiesInterface $properties;
-
-    private Psr17Interface $psr17;
-
     public function __construct(
-        CasInterface $cas,
-        PropertiesInterface $casProperties,
-        Psr17Interface $psr17
+        private readonly CasInterface $cas,
+        private readonly PropertiesInterface $properties,
+        private readonly Psr17Interface $psr17,
+        private readonly CasResponseBuilderInterface $casResponseBuilder
     ) {
-        $this->cas = $cas;
-        $this->properties = $casProperties;
-        $this->psr17 = $psr17;
     }
 
     public function authenticate(
         ServerRequestInterface $request,
         array $parameters = []
     ): array {
-        return $this->cas->authenticate($request, $parameters);
+        try {
+            $response = $this->requestTicketValidation($request, $parameters);
+        } catch (Throwable $exception) {
+            throw CasException::unableToAuthenticate($exception);
+        }
+
+        try {
+            $casResponse = $this
+                ->casResponseBuilder
+                ->fromResponse($response);
+        } catch (Throwable $exception) {
+            throw CasException::unableToAuthenticate($exception);
+        }
+
+        try {
+            $credentials = $casResponse->toArray();
+        } catch (Throwable $exception) {
+            throw CasException::unableToAuthenticate($exception);
+        }
+
+        return $credentials;
     }
 
     public function handleProxyCallback(
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        $response = $this
-            ->cas
-            ->handleProxyCallback($request, $parameters);
-
-        $body = '<?xml version="1.0" encoding="utf-8"?><proxySuccess xmlns="http://www.yale.edu/tp/casClient" />';
-
-        return $response
-            ->withBody(
-                $this
-                    ->psr17
-                    ->createStream($body)
+        return $this
+            ->process(
+                $request,
+                new ProxyCallback($this->cas, $this->psr17, $parameters)
             );
     }
 
@@ -67,14 +76,40 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        return $this->cas->login($request, $parameters);
+        $handler = new class($this->cas, $parameters) implements RequestHandlerInterface {
+            public function __construct(
+                private readonly CasInterface $cas,
+                private readonly array $parameters
+            ) {
+            }
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return $this->cas->login($request, $this->parameters);
+            }
+        };
+
+        return $this->process($request, $handler);
     }
 
     public function logout(
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        return $this->cas->logout($request, $parameters);
+        $handler = new class($this->cas, $parameters) implements RequestHandlerInterface {
+            public function __construct(
+                private readonly CasInterface $cas,
+                private readonly array $parameters
+            ) {
+            }
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return $this->cas->logout($request, $this->parameters);
+            }
+        };
+
+        return $this->process($request, $handler);
     }
 
     public function process(
@@ -88,60 +123,65 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        return $this->cas->requestProxyTicket($request, $parameters);
+        $handler = new class($this->cas, $parameters) implements RequestHandlerInterface {
+            public function __construct(
+                private readonly CasInterface $cas,
+                private readonly array $parameters
+            ) {
+            }
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return $this->cas->requestProxyTicket($request, $this->parameters);
+            }
+        };
+
+        return $this->process($request, $handler);
     }
 
     public function requestServiceValidate(
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        return $this->cas->requestServiceValidate($request, $parameters);
+        $handler = new class($this->cas, $parameters) implements RequestHandlerInterface {
+            public function __construct(
+                private readonly CasInterface $cas,
+                private readonly array $parameters
+            ) {
+            }
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return $this->cas->requestServiceValidate($request, $this->parameters);
+            }
+        };
+
+        return $this->process($request, $handler);
     }
 
     public function requestTicketValidation(
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        if ('' !== $ticket = $this->extractTicketFromRequestHeaders($request)) {
-            $parameters += ['ticket' => $ticket];
-        }
+        $handler = new RequestTicketValidation(
+            $this->cas,
+            $this->psr17,
+            $this->properties,
+            $parameters
+        );
 
-        /** @var \EcPhp\CasLib\Contract\Response\Type\ServiceValidate $response */
-        $response = $this->cas->requestTicketValidation($request, $parameters);
-
-        $authenticationLevelFromResponse = $response->toArray()['serviceResponse']['authenticationSuccess']['authenticationLevel'] ?? EcasProperties::AUTHENTICATION_LEVEL_BASIC;
-        $authenticationLevelFromConfiguration = $this->properties['protocol'][HandlerInterface::TYPE_LOGIN]['default_parameters']['authenticationLevel'];
-
-        if (EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromResponse] < EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromConfiguration]) {
-            throw new Exception('Unable to validate ticket: invalid authentication level.');
-        }
-
-        return $response;
+        return $this->process($request, $handler);
     }
 
     public function supportAuthentication(
         ServerRequestInterface $request,
         array $parameters = []
     ): bool {
-        if ('' !== $ticket = $this->extractTicketFromRequestHeaders($request)) {
-            $parameters += ['ticket' => $ticket];
-        }
-
-        return $this->cas->supportAuthentication($request, $parameters);
-    }
-
-    /**
-     * Extract ticket from $request.
-     */
-    private function extractTicketFromRequestHeaders(ServerRequestInterface $request): string
-    {
-        // check for ticket in Authorization header as provided by OpenId
-        // Authorization: cas_ticket PT-226194-QdoP...
-
-        return (string) preg_replace(
-            '/^cas_ticket /i',
-            '',
-            $request->getHeaderLine('Authorization')
-        );
+        return $this
+            ->cas
+            ->supportAuthentication(
+                $request,
+                (new Parameters())->addTicketFromRequestHeaders($request, $parameters)
+            );
     }
 }

@@ -178,20 +178,22 @@ class EcasSpec extends ObjectBehavior
         );
 
         $properties = CasHelper::getTestProperties();
+        $casResponseBuilder = new CasResponseBuilder();
 
         $cas = new Cas(
             $properties,
             new Psr18Client(CasHelper::getHttpClientMock()),
             $psr17,
             new ArrayAdapter(),
-            new CasResponseBuilder()
+            $casResponseBuilder
         );
 
         $this
             ->beConstructedWith(
                 $cas,
                 $properties,
-                $psr17
+                $psr17,
+                $casResponseBuilder
             );
     }
 }
