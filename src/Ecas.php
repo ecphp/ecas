@@ -94,7 +94,7 @@ final class Ecas implements CasInterface
                     ->cas
                     ->login(
                         $request,
-                        $request->getAttribute('parameters' . [])
+                        $request->getAttribute('parameters', [])
                     );
             }
         };
