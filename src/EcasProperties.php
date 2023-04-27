@@ -41,6 +41,7 @@ final class EcasProperties implements PropertiesInterface
 
         $properties['protocol']['serviceValidate']['default_parameters']['format'] = 'JSON';
         $properties['protocol']['proxyValidate']['default_parameters']['format'] = 'JSON';
+        $properties['protocol']['login']['default_parameters']['format'] = 'JSON';
         $properties['protocol']['login']['default_parameters']['authenticationLevel'] = $properties['protocol']['login']['default_parameters']['authenticationLevel'] ?? self::AUTHENTICATION_LEVEL_BASIC;
 
         if (false === is_string($properties['protocol']['login']['default_parameters']['authenticationLevel'])) {

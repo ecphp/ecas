@@ -39,6 +39,7 @@ class EcasPropertiesSpec extends ObjectBehavior
                         ],
                         'login' => [
                             'default_parameters' => [
+                                'format' => 'JSON',
                                 'authenticationLevel' => 'BASIC',
                             ],
                         ],
@@ -49,11 +50,7 @@ class EcasPropertiesSpec extends ObjectBehavior
 
     public function let()
     {
-        $properties = [
-            'foo' => 'bar',
-        ];
-
         $this
-            ->beConstructedWith(new Properties($properties));
+            ->beConstructedWith(new EcasProperties(new Properties(['foo' => 'bar'])));
     }
 }

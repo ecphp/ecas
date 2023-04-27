@@ -13,6 +13,7 @@ namespace spec\EcPhp\Ecas;
 
 use EcPhp\CasLib\Cas;
 use EcPhp\CasLib\Response\CasResponseBuilder;
+use EcPhp\Ecas\Response\EcasResponseBuilder;
 use Ergebnis\Http\Method;
 use Exception;
 use loophp\psr17\Psr17;
@@ -27,6 +28,24 @@ require_once __DIR__ . '/CasHelper.php';
 
 class EcasSpec extends ObjectBehavior
 {
+    public function it_can_do_a_login_with_a_transaction_id()
+    {
+        $request = new ServerRequest(
+            Method::GET,
+            'http://foobar/',
+        );
+
+        $response = $this
+            ->login($request);
+
+        $response
+            ->shouldBeAnInstanceOf(ResponseInterface::class);
+
+        $response
+            ->getHeaderLine('Location')
+            ->shouldReturn('http://local/cas/login?loginRequestId=ECAS_LR-authenticationLevel%3DMEDIUM%26format%3DJSON%26service%3Dhttp%253A%252F%252Ffoobar%252F');
+    }
+
     public function it_can_do_a_service_ticket_validation_and_make_sure_authenticationLevel_is_correct()
     {
         $request = new ServerRequest(
@@ -144,7 +163,7 @@ class EcasSpec extends ObjectBehavior
             ->shouldReturn(true);
 
         $request = new ServerRequest(
-            'GET',
+            Method::GET,
             'http://local/',
         );
 
@@ -155,7 +174,7 @@ class EcasSpec extends ObjectBehavior
         // Make sure that if a service is passed through the argument, it is
         // not overridden.
         $request = new ServerRequest(
-            'GET',
+            Method::GET,
             'http://local/',
             ['Authorization' => 'cas_ticket foo']
         );
@@ -178,14 +197,15 @@ class EcasSpec extends ObjectBehavior
         );
 
         $properties = CasHelper::getTestProperties();
-        $casResponseBuilder = new CasResponseBuilder();
+        $client = new Psr18Client(CasHelper::getHttpClientMock());
+        $ecasResponseBuilder = new EcasResponseBuilder(new CasResponseBuilder());
 
         $cas = new Cas(
             $properties,
-            new Psr18Client(CasHelper::getHttpClientMock()),
+            $client,
             $psr17,
             new ArrayAdapter(),
-            $casResponseBuilder
+            $ecasResponseBuilder
         );
 
         $this
@@ -193,7 +213,8 @@ class EcasSpec extends ObjectBehavior
                 $cas,
                 $properties,
                 $psr17,
-                $casResponseBuilder
+                $ecasResponseBuilder,
+                $client,
             );
     }
 }

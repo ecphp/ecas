@@ -28,6 +28,11 @@
             "EcPhp\\Ecas\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "spec\\EcPhp\\Ecas\\": "spec/EcPhp/Ecas"
+        }
+    },
     "config": {
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
