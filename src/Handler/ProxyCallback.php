@@ -21,8 +21,7 @@ final class ProxyCallback implements RequestHandlerInterface
 {
     public function __construct(
         private readonly CasInterface $cas,
-        private readonly Psr17Interface $psr17,
-        private readonly array $parameters
+        private readonly Psr17Interface $psr17
     ) {
     }
 
@@ -32,7 +31,7 @@ final class ProxyCallback implements RequestHandlerInterface
 
         return $this
             ->cas
-            ->handleProxyCallback($request, $this->parameters)
+            ->handleProxyCallback($request, $request->getAttribute('parameters', []))
             ->withBody(
                 $this
                     ->psr17

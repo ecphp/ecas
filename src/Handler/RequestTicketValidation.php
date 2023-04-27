@@ -27,17 +27,13 @@ final class RequestTicketValidation implements RequestHandlerInterface
     public function __construct(
         private readonly CasInterface $cas,
         private readonly Psr17Interface $psr17,
-        private readonly PropertiesInterface $properties,
-        private readonly array $parameters
+        private readonly PropertiesInterface $properties
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $parameters = $this->parameters;
-
-        $parameters = (new Parameters())
-            ->addTicketFromRequestHeaders($request, $this->parameters);
+        $parameters = (new Parameters())->addTicketFromRequestHeaders($request);
 
         /** @var \EcPhp\CasLib\Contract\Response\Type\ServiceValidate $response */
         $response = $this->cas->requestTicketValidation($request, $parameters);

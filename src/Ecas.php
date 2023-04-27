@@ -67,8 +67,8 @@ final class Ecas implements CasInterface
     ): ResponseInterface {
         return $this
             ->process(
-                $request,
-                new ProxyCallback($this->cas, $this->psr17, $parameters)
+                $request->withAttribute('parameters', $parameters),
+                new ProxyCallback($this->cas, $this->psr17)
             );
     }
 
@@ -76,40 +76,60 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        $handler = new class($this->cas, $parameters) implements RequestHandlerInterface {
+        // To properly implement the decorator pattern, we cannot simply call
+        // $this->cas->method(). This bypasses the $this->process() and does not
+        // adhere to the pattern.
+        // To address this, an anonymous RequestHandler class is used when the
+        // method is not overridden, or a regular class in a separate file when
+        // it is overridden.
+        $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
-                private readonly CasInterface $cas,
-                private readonly array $parameters
+                private readonly CasInterface $cas
             ) {
             }
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
-                return $this->cas->login($request, $this->parameters);
+                return $this
+                    ->cas
+                    ->login(
+                        $request,
+                        $request->getAttribute('parameters' . [])
+                    );
             }
         };
 
-        return $this->process($request, $handler);
+        return $this->process(
+            $request->withAttribute('parameters', $parameters),
+            $handler
+        );
     }
 
     public function logout(
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        $handler = new class($this->cas, $parameters) implements RequestHandlerInterface {
+        $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
                 private readonly CasInterface $cas,
-                private readonly array $parameters
             ) {
             }
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
-                return $this->cas->logout($request, $this->parameters);
+                return $this
+                    ->cas
+                    ->logout(
+                        $request,
+                        $request->getAttribute('parameters', [])
+                    );
             }
         };
 
-        return $this->process($request, $handler);
+        return $this->process(
+            $request->withAttribute('parameters', $parameters),
+            $handler
+        );
     }
 
     public function process(
@@ -123,54 +143,69 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        $handler = new class($this->cas, $parameters) implements RequestHandlerInterface {
+        $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
-                private readonly CasInterface $cas,
-                private readonly array $parameters
+                private readonly CasInterface $cas
             ) {
             }
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
-                return $this->cas->requestProxyTicket($request, $this->parameters);
+                return $this
+                    ->cas
+                    ->requestProxyTicket(
+                        $request,
+                        $request->getAttribute('parameters', [])
+                    );
             }
         };
 
-        return $this->process($request, $handler);
+        return $this->process(
+            $request->withAttribute('parameters', $parameters),
+            $handler
+        );
     }
 
     public function requestServiceValidate(
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        $handler = new class($this->cas, $parameters) implements RequestHandlerInterface {
+        $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
-                private readonly CasInterface $cas,
-                private readonly array $parameters
+                private readonly CasInterface $cas
             ) {
             }
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
-                return $this->cas->requestServiceValidate($request, $this->parameters);
+                return $this
+                    ->cas
+                    ->requestServiceValidate(
+                        $request,
+                        $request->getAttribute('parameters', [])
+                    );
             }
         };
 
-        return $this->process($request, $handler);
+        return $this->process(
+            $request->withAttribute('parameters', $parameters),
+            $handler
+        );
     }
 
     public function requestTicketValidation(
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
-        $handler = new RequestTicketValidation(
-            $this->cas,
-            $this->psr17,
-            $this->properties,
-            $parameters
-        );
-
-        return $this->process($request, $handler);
+        return $this
+            ->process(
+                $request->withAttribute('parameters', $parameters),
+                new RequestTicketValidation(
+                    $this->cas,
+                    $this->psr17,
+                    $this->properties,
+                )
+            );
     }
 
     public function supportAuthentication(
@@ -181,7 +216,9 @@ final class Ecas implements CasInterface
             ->cas
             ->supportAuthentication(
                 $request,
-                (new Parameters())->addTicketFromRequestHeaders($request, $parameters)
+                (new Parameters())->addTicketFromRequestHeaders(
+                    $request->withAttribute('parameters', $parameters)
+                )
             );
     }
 }

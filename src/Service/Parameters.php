@@ -16,10 +16,12 @@ use Psr\Http\Message\ServerRequestInterface;
 final class Parameters
 {
     /**
-     * Extract ticket from the request and update parameters array with it.
+     * Extract ticket from the request.
      */
-    public function addTicketFromRequestHeaders(ServerRequestInterface $request, array $parameters): array
+    public function addTicketFromRequestHeaders(ServerRequestInterface $request): array
     {
+        $parameters = $request->getAttribute('parameters', []);
+
         // check for ticket in Authorization header as provided by OpenId
         // Authorization: cas_ticket PT-226194-QdoP...
         $ticket = (string) preg_replace(
