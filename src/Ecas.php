@@ -15,9 +15,12 @@ use EcPhp\CasLib\Contract\CasInterface;
 use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
 use EcPhp\CasLib\Contract\Response\CasResponseBuilderInterface;
 use EcPhp\CasLib\Exception\CasException;
+use EcPhp\Ecas\Handler\AttachClientFingerprintCookie;
 use EcPhp\Ecas\Handler\LoginTransaction;
 use EcPhp\Ecas\Handler\ProxyCallback;
+use EcPhp\Ecas\Handler\RemoveClientFingerprintCookie;
 use EcPhp\Ecas\Handler\RequestTicketValidation;
+use EcPhp\Ecas\Service\Fingerprint\Fingerprint;
 use EcPhp\Ecas\Service\Parameters;
 use loophp\psr17\Psr17Interface;
 use Psr\Http\Client\ClientInterface;
@@ -34,6 +37,7 @@ final class Ecas implements CasInterface
         private readonly Psr17Interface $psr17,
         private readonly CasResponseBuilderInterface $casResponseBuilder,
         private readonly ClientInterface $client,
+        private readonly Fingerprint $fingerprint
     ) {
     }
 
@@ -79,6 +83,17 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
+        // Create request with new attributes
+        $request = $request
+            ->withAttribute(
+                'parameters',
+                $parameters
+            )
+            ->withAttribute(
+                AttachClientFingerprintCookie::CLIENT_FINGERPRINT_ATTRIBUTE,
+                $this->fingerprint->generate()
+            );
+
         // To properly implement the decorator pattern, we cannot simply call
         // $this->cas->method(). This bypasses the $this->process() and does not
         // adhere to the pattern.
@@ -102,13 +117,17 @@ final class Ecas implements CasInterface
             }
         };
 
+        // Process regular CAS login
         $response = $this->process(
-            $request->withAttribute('parameters', $parameters),
+            $request->withAttribute(
+                'parameters',
+                (new Parameters())->addFingerprintParameter($request)
+            ),
             $handler
         );
 
         // Do the LoginTransaction feature stuff.
-        return $this->process(
+        $response = $this->process(
             $request->withAttribute('response', $response),
             new LoginTransaction(
                 $this->cas,
@@ -117,6 +136,15 @@ final class Ecas implements CasInterface
                 $this->client,
             )
         );
+
+        // Do the ClientFingerprint feature stuff.
+        return $this
+            ->process(
+                $request->withAttribute('response', $response),
+                new AttachClientFingerprintCookie(
+                    $this->psr17
+                )
+            );
     }
 
     public function logout(
@@ -229,14 +257,30 @@ final class Ecas implements CasInterface
         ServerRequestInterface $request,
         array $parameters = []
     ): ResponseInterface {
+        $request = $request->withAttribute('parameters', $parameters);
+
+        $request = $request
+            ->withAttribute(
+                'parameters',
+                (new Parameters())->addFingerprintFromCookie($request)
+            );
+
+        $requestTicketValidationHandler = new RequestTicketValidation(
+            $this->cas,
+            $this->psr17,
+            $this->properties
+        );
+
+        $response = $this
+            ->process(
+                $request,
+                $requestTicketValidationHandler
+            );
+
         return $this
             ->process(
-                $request->withAttribute('parameters', $parameters),
-                new RequestTicketValidation(
-                    $this->cas,
-                    $this->psr17,
-                    $this->properties,
-                )
+                $request->withAttribute('response', $response),
+                new RemoveClientFingerprintCookie()
             );
     }
 

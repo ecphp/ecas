@@ -14,6 +14,7 @@ namespace spec\EcPhp\Ecas;
 use EcPhp\CasLib\Cas;
 use EcPhp\CasLib\Response\CasResponseBuilder;
 use EcPhp\Ecas\Response\EcasResponseBuilder;
+use EcPhp\Ecas\Service\Fingerprint\Fingerprint;
 use Ergebnis\Http\Method;
 use Exception;
 use loophp\psr17\Psr17;
@@ -43,7 +44,7 @@ class EcasSpec extends ObjectBehavior
 
         $response
             ->getHeaderLine('Location')
-            ->shouldReturn('http://local/cas/login?loginRequestId=ECAS_LR-authenticationLevel%3DMEDIUM%26format%3DJSON%26service%3Dhttp%253A%252F%252Ffoobar%252F');
+            ->shouldReturn('http://local/cas/login?loginRequestId=ECAS_LR-authenticationLevel%3DMEDIUM%26clientFingerprint%3Dg6iNgS0S%252F7LCI3c5Hs8oufXj2NQ%253D%26format%3DJSON%26service%3Dhttp%253A%252F%252Ffoobar%252F');
     }
 
     public function it_can_do_a_service_ticket_validation_and_make_sure_authenticationLevel_is_correct()
@@ -184,8 +185,12 @@ class EcasSpec extends ObjectBehavior
             ->shouldReturn(true);
     }
 
-    public function let()
+    public function let(Fingerprint $fingerprint)
     {
+        $fingerprint
+            ->generate()
+            ->willReturn('predictable');
+
         $psr17Factory = new Psr17Factory();
         $psr17 = new Psr17(
             $psr17Factory,
@@ -215,6 +220,7 @@ class EcasSpec extends ObjectBehavior
                 $psr17,
                 $ecasResponseBuilder,
                 $client,
+                $fingerprint
             );
     }
 }
