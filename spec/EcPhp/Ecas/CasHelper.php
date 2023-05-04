@@ -42,7 +42,6 @@ class CasHelper
 
                 case 'http://local/cas/login/init':
                 case 'http://local/cas/login/success/init':
-                case 'http://local/cas/login/success/init?authenticationLevel=MEDIUM&format=JSON&service=http%3A%2F%2Ffoobar%2F':
                     $body = json_encode([
                         'loginRequest' => [
                             'loginRequestSuccess' => [
