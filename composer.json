@@ -5,6 +5,7 @@
     "type": "library",
     "require": {
         "php": ">= 8.1",
+        "dflydev/fig-cookies": "^3",
         "ecphp/cas-lib": "^2",
         "loophp/psr17": "^1.0.5",
         "psr/http-client": "^1.0",
@@ -22,8 +23,6 @@
         "symfony/cache": "^6",
         "symfony/http-client": "^6"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "EcPhp\\Ecas\\": "src/"
