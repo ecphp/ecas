@@ -27,7 +27,7 @@ use function array_key_exists;
 final class EcasResponseBuilder implements CasResponseBuilderInterface
 {
     public function __construct(
-        private readonly CasResponseBuilderInterface $casResponseBuilderInterface,
+        private readonly CasResponseBuilderInterface $casResponseBuilder,
         private readonly LoginRequestFactoryInterface $loginRequestFactory = new LoginRequestFactory(),
         private readonly LoginRequestFailureFactoryInterface $loginRequestFailureFactory = new LoginRequestFailureFactory()
     ) {
@@ -36,7 +36,7 @@ final class EcasResponseBuilder implements CasResponseBuilderInterface
     public function fromResponse(ResponseInterface $response): CasResponseInterface
     {
         try {
-            return $this->casResponseBuilderInterface->fromResponse($response);
+            return $this->casResponseBuilder->fromResponse($response);
         } catch (Throwable $exception) {
         }
 
