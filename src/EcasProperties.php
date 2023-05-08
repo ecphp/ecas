@@ -13,8 +13,8 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\Configuration\Properties;
 use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
+use Exception;
 use InvalidArgumentException;
-use ReturnTypeWillChange;
 
 use function array_key_exists;
 use function is_string;
@@ -61,18 +61,16 @@ final class EcasProperties implements PropertiesInterface
     }
 
     /**
-     * @param mixed $offset
+     * @param int|string $offset
      */
-    #[ReturnTypeWillChange]
     public function offsetExists($offset): bool
     {
         return $this->properties->offsetExists($offset);
     }
 
     /**
-     * @param mixed $offset
+     * @param int|string $offset
      */
-    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->properties->offsetGet($offset);
@@ -82,18 +80,16 @@ final class EcasProperties implements PropertiesInterface
      * @param mixed $offset
      * @param mixed $value
      */
-    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value): void
     {
-        $this->properties->offsetSet($offset, $value);
+        throw new Exception('Read-only object, setters are disabled.');
     }
 
     /**
      * @param mixed $offset
      */
-    #[ReturnTypeWillChange]
     public function offsetUnset($offset): void
     {
-        $this->properties->offsetUnset($offset);
+        throw new Exception('Read-only object, setters are disabled.');
     }
 }
