@@ -150,7 +150,7 @@ class CasHelper
 
     public static function getTestPropertiesWithPgtUrl(): PropertiesInterface
     {
-        $properties = self::getTestProperties()->all();
+        $properties = self::getTestProperties()->jsonSerialize();
 
         $properties['protocol']['serviceValidate']['default_parameters']['pgtUrl'] = 'https://from/proxyCallback.php';
 

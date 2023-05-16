@@ -13,7 +13,6 @@ namespace EcPhp\Ecas;
 
 use EcPhp\CasLib\Configuration\Properties;
 use EcPhp\CasLib\Contract\Configuration\PropertiesInterface;
-use Exception;
 use InvalidArgumentException;
 
 use function array_key_exists;
@@ -37,7 +36,7 @@ final class EcasProperties implements PropertiesInterface
 
     public function __construct(PropertiesInterface $casProperties)
     {
-        $properties = $casProperties->all();
+        $properties = $casProperties->jsonSerialize();
 
         $properties['protocol']['serviceValidate']['default_parameters']['format'] = 'JSON';
         $properties['protocol']['proxyValidate']['default_parameters']['format'] = 'JSON';
@@ -55,28 +54,8 @@ final class EcasProperties implements PropertiesInterface
         $this->properties = new Properties($properties);
     }
 
-    public function all(): array
+    public function jsonSerialize(): mixed
     {
-        return $this->properties->all();
-    }
-
-    public function offsetExists(mixed $offset): bool
-    {
-        return $this->properties->offsetExists($offset);
-    }
-
-    public function offsetGet(mixed $offset): mixed
-    {
-        return $this->properties->offsetGet($offset);
-    }
-
-    public function offsetSet(mixed $offset, mixed $value): void
-    {
-        throw new Exception('Read-only object, setters are disabled.');
-    }
-
-    public function offsetUnset(mixed $offset): void
-    {
-        throw new Exception('Read-only object, setters are disabled.');
+        return $this->properties->jsonSerialize();
     }
 }

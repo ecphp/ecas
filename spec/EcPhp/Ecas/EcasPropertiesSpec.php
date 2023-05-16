@@ -22,7 +22,7 @@ class EcasPropertiesSpec extends ObjectBehavior
         $this->shouldHaveType(EcasProperties::class);
 
         $this
-            ->all()
+            ->jsonSerialize()
             ->shouldReturn(
                 [
                     'foo' => 'bar',

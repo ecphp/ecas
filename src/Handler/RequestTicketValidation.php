@@ -39,7 +39,7 @@ final class RequestTicketValidation implements RequestHandlerInterface
         $response = $this->cas->requestTicketValidation($request, $parameters);
 
         $authenticationLevelFromResponse = $response->toArray()['serviceResponse']['authenticationSuccess']['authenticationLevel'] ?? EcasProperties::AUTHENTICATION_LEVEL_BASIC;
-        $authenticationLevelFromConfiguration = $this->properties['protocol'][HandlerInterface::TYPE_LOGIN]['default_parameters']['authenticationLevel'];
+        $authenticationLevelFromConfiguration = $this->properties->jsonSerialize()['protocol'][HandlerInterface::TYPE_LOGIN]['default_parameters']['authenticationLevel'];
 
         if (EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromResponse] < EcasProperties::AUTHENTICATION_LEVELS[$authenticationLevelFromConfiguration]) {
             throw new Exception('Unable to validate ticket: invalid authentication level.');
