@@ -5,7 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.4](https://github.com/ecphp/ecas/compare/3.0.3...3.0.4)
+## [4.0.0](https://github.com/ecphp/ecas/compare/3.0.4...4.0.0)
+
+### Merged
+
+- feat: implements client fingerprint [`#38`](https://github.com/ecphp/ecas/pull/38)
+- feat: implements login transactions [`#37`](https://github.com/ecphp/ecas/pull/37)
+
+### Commits
+
+- **Breaking change:** refactor: replace Properties::all() with `Properties::jsonSerialize()`. [`9517216`](https://github.com/ecphp/ecas/commit/95172168a9a6978c9a67e5f19b8cb6946652ebc4)
+- ci: bump versions [`0ce530b`](https://github.com/ecphp/ecas/commit/0ce530bd40137cd0020aedd89d98a6b8da77a170)
+- chore: bump versions [`927101f`](https://github.com/ecphp/ecas/commit/927101fe261cbdba8e402b370eb9fe156f3d1a2f)
+- chore: rename property [`4b78864`](https://github.com/ecphp/ecas/commit/4b78864bccaf525ef0adf8614c7ac378a69e84e4)
+- autofix code style [`5385fd4`](https://github.com/ecphp/ecas/commit/5385fd496cfc287ed746ee768c319862fece2b1f)
+- chore: rename property [`866ded5`](https://github.com/ecphp/ecas/commit/866ded5d580bae8f482569c414fefd4d4eac1277)
+- refactor: update `composer.json` [`2215f3f`](https://github.com/ecphp/ecas/commit/2215f3fb608c8a802713c2231266fd2aae071d47)
+- tests: cleanup [`2971fb2`](https://github.com/ecphp/ecas/commit/2971fb209063cc268b863a2206b5ebc77e672c41)
+- tests: cleanup [`b301115`](https://github.com/ecphp/ecas/commit/b301115a388839c95198823eed729664cddf5737)
+- doc: get rid of scrutinizer [`aa1caaf`](https://github.com/ecphp/ecas/commit/aa1caaf33fda8f9d09e57b52f6e81ec21d2ce376)
+- ci: add steps to send static analysis statistics [`ec60aed`](https://github.com/ecphp/ecas/commit/ec60aedbeef02a87feedd93512c03105446ce358)
+- fix: typo [`f3fddb4`](https://github.com/ecphp/ecas/commit/f3fddb4c245de3e35d1560d114a7e0e6f5db33c5)
+- refactor: use `RequestHandler` objects [`5650990`](https://github.com/ecphp/ecas/commit/5650990338d5d76cb14dbfb47d3abefbc584bb66)
+- refactor: use `RequestHandler` objects [`45be4dd`](https://github.com/ecphp/ecas/commit/45be4dd3813f5847574f2dbcd0f394565bfd44cd)
+- cs: remove unused imports [`d48363c`](https://github.com/ecphp/ecas/commit/d48363c9cfb48e5776d5d3001c8d3679d109a426)
+
+## [3.0.4](https://github.com/ecphp/ecas/compare/3.0.3...3.0.4) - 2023-04-12
+
+### Commits
+
+- docs: Update changelog. [`853808e`](https://github.com/ecphp/ecas/commit/853808e727350d0c300f1dfa598aca71c2bc8130)
 
 ## [3.0.3](https://github.com/ecphp/ecas/compare/3.0.2...3.0.3) - 2023-04-12
 
