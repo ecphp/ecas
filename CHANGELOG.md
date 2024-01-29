@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.0](https://github.com/ecphp/ecas/compare/3.0.4...4.0.0)
+## [4.0.1](https://github.com/ecphp/ecas/compare/4.0.0...4.0.1)
+
+### Merged
+
+- build(deps): bump actions/checkout from 3 to 4 [`#43`](https://github.com/ecphp/ecas/pull/43)
+- build(deps): bump cachix/install-nix-action from 21 to 22 [`#41`](https://github.com/ecphp/ecas/pull/41)
+
+### Commits
+
+- chore: autofix code style [`caea054`](https://github.com/ecphp/ecas/commit/caea054d3a897cc6edd5808ecb3fff0a11e81427)
+- fix: use `pgtIou` and `pgtId` when sent using `POST` method [`3a803b0`](https://github.com/ecphp/ecas/commit/3a803b05b0fb835cd663b2911d6a9d0df3138032)
+
+## [4.0.0](https://github.com/ecphp/ecas/compare/3.0.4...4.0.0) - 2023-05-30
 
 ### Merged
 
@@ -15,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Commits
 
 - **Breaking change:** refactor: replace Properties::all() with `Properties::jsonSerialize()`. [`9517216`](https://github.com/ecphp/ecas/commit/95172168a9a6978c9a67e5f19b8cb6946652ebc4)
+- docs: update CHANGELOG [`c650212`](https://github.com/ecphp/ecas/commit/c65021285343d565b95c4fa43d740226ad0e34d0)
 - ci: bump versions [`0ce530b`](https://github.com/ecphp/ecas/commit/0ce530bd40137cd0020aedd89d98a6b8da77a170)
 - chore: bump versions [`927101f`](https://github.com/ecphp/ecas/commit/927101fe261cbdba8e402b370eb9fe156f3d1a2f)
 - chore: rename property [`4b78864`](https://github.com/ecphp/ecas/commit/4b78864bccaf525ef0adf8614c7ac378a69e84e4)
