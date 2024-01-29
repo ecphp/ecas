@@ -38,8 +38,7 @@ final class Ecas implements CasInterface
         private readonly CasResponseBuilderInterface $casResponseBuilder,
         private readonly ClientInterface $client,
         private readonly Fingerprint $fingerprint
-    ) {
-    }
+    ) {}
 
     public function authenticate(
         ServerRequestInterface $request,
@@ -103,8 +102,7 @@ final class Ecas implements CasInterface
         $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
                 private readonly CasInterface $cas
-            ) {
-            }
+            ) {}
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
@@ -160,8 +158,7 @@ final class Ecas implements CasInterface
         $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
                 private readonly CasInterface $cas,
-            ) {
-            }
+            ) {}
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
@@ -200,8 +197,7 @@ final class Ecas implements CasInterface
         $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
                 private readonly CasInterface $cas
-            ) {
-            }
+            ) {}
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
@@ -233,8 +229,7 @@ final class Ecas implements CasInterface
         $handler = new class($this->cas) implements RequestHandlerInterface {
             public function __construct(
                 private readonly CasInterface $cas
-            ) {
-            }
+            ) {}
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {

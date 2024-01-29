@@ -32,8 +32,7 @@ final class LoginTransaction implements RequestHandlerInterface
         private readonly Psr17Interface $psr17,
         private readonly CasResponseBuilderInterface $casResponseBuilder,
         private readonly ClientInterface $client,
-    ) {
-    }
+    ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

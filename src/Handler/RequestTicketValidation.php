@@ -28,8 +28,7 @@ final class RequestTicketValidation implements RequestHandlerInterface
         private readonly CasInterface $cas,
         private readonly Psr17Interface $psr17,
         private readonly PropertiesInterface $properties
-    ) {
-    }
+    ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

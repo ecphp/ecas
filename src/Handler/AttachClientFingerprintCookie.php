@@ -25,8 +25,7 @@ final class AttachClientFingerprintCookie implements RequestHandlerInterface
 
     public function __construct(
         private readonly Psr17Interface $psr17
-    ) {
-    }
+    ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

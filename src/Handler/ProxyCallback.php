@@ -22,8 +22,7 @@ final class ProxyCallback implements RequestHandlerInterface
     public function __construct(
         private readonly CasInterface $cas,
         private readonly Psr17Interface $psr17
-    ) {
-    }
+    ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

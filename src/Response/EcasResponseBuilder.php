@@ -30,8 +30,7 @@ final class EcasResponseBuilder implements CasResponseBuilderInterface
         private readonly CasResponseBuilderInterface $casResponseBuilder,
         private readonly LoginRequestFactoryInterface $loginRequestFactory = new LoginRequestFactory(),
         private readonly LoginRequestFailureFactoryInterface $loginRequestFailureFactory = new LoginRequestFailureFactory()
-    ) {
-    }
+    ) {}
 
     public function fromResponse(ResponseInterface $response): CasResponseInterface
     {
