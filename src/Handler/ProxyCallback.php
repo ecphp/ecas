@@ -31,7 +31,15 @@ final class ProxyCallback implements RequestHandlerInterface
 
         return $this
             ->cas
-            ->handleProxyCallback($request, $request->getAttribute('parameters', []))
+            ->handleProxyCallback(
+                $request,
+                [
+                    ...$request->getAttribute('parameters', []),
+                    // The pgtIou and pgtId are sent in POST, not in GET
+                    // This is very specific to ECAS
+                    ...$request->getParsedBody(),
+                ]
+            )
             ->withBody(
                 $this
                     ->psr17
