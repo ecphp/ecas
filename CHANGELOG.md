@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.1](https://github.com/ecphp/ecas/compare/4.0.0...4.0.1)
+## [4.0.2](https://github.com/ecphp/ecas/compare/4.0.1...4.0.2)
+
+### Commits
+
+- chore: update license year [`1f7625e`](https://github.com/ecphp/ecas/commit/1f7625edc8330c1bd56de6e9fb2b98bcb3603a16)
+- tests: add new tests [`9dc73ee`](https://github.com/ecphp/ecas/commit/9dc73ee9eeed870658d81053db181afd65ef8be4)
+- fix: update precedence of parameters sent to ecphp/cas-lib [`c87e066`](https://github.com/ecphp/ecas/commit/c87e066bdfef6613ae337f1c824018a16b60dfe2)
+
+## [4.0.1](https://github.com/ecphp/ecas/compare/4.0.0...4.0.1) - 2024-01-29
 
 ### Merged
 
@@ -14,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Commits
 
+- docs: update changelog [`2783c9d`](https://github.com/ecphp/ecas/commit/2783c9d80a11348889ebaa13e53878286ff4e7b6)
 - chore: autofix code style [`caea054`](https://github.com/ecphp/ecas/commit/caea054d3a897cc6edd5808ecb3fff0a11e81427)
 - fix: use `pgtIou` and `pgtId` when sent using `POST` method [`3a803b0`](https://github.com/ecphp/ecas/commit/3a803b05b0fb835cd663b2911d6a9d0df3138032)
 
