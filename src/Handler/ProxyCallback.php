@@ -17,6 +17,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use function is_array;
+
 final class ProxyCallback implements RequestHandlerInterface
 {
     public function __construct(
@@ -28,16 +30,17 @@ final class ProxyCallback implements RequestHandlerInterface
     {
         $body = '<?xml version="1.0" encoding="utf-8"?><proxySuccess xmlns="http://www.yale.edu/tp/casClient" />';
 
+        // The standard CAS protocol send the pgtIou and pgtId using GET method.
+        // In ECAS, they are sent using POST method.
+        $parameters = ($request->getMethod() === 'POST' && is_array($postParams = $request->getParsedBody()))
+            ? $postParams :
+            [];
+
         return $this
             ->cas
             ->handleProxyCallback(
                 $request,
-                [
-                    ...$request->getAttribute('parameters', []),
-                    // The pgtIou and pgtId are sent in POST, not in GET
-                    // This is very specific to ECAS
-                    ...$request->getParsedBody(),
-                ]
+                $request->getAttribute('parameters', []) + $parameters
             )
             ->withBody(
                 $this
