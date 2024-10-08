@@ -25,6 +25,8 @@ use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
+use function sprintf;
+
 final class LoginTransaction implements RequestHandlerInterface
 {
     public function __construct(

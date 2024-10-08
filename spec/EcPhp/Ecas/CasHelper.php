@@ -20,6 +20,8 @@ use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+use function sprintf;
+
 class CasHelper
 {
     public static function getHttpClientMock(): HttpClientInterface

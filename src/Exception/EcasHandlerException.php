@@ -15,6 +15,8 @@ use EcPhp\CasLib\Exception\CasExceptionInterface;
 use EcPhp\Ecas\Contract\Response\Type\LoginRequestFailure;
 use Exception;
 
+use function sprintf;
+
 final class EcasHandlerException extends Exception implements CasExceptionInterface
 {
     public static function badResponseAttribute(): self

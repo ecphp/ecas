@@ -17,6 +17,7 @@ use InvalidArgumentException;
 
 use function array_key_exists;
 use function is_string;
+use function sprintf;
 
 final class EcasProperties implements PropertiesInterface
 {
