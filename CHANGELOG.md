@@ -5,10 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.2](https://github.com/ecphp/ecas/compare/4.0.1...4.0.2)
+## [4.0.3](https://github.com/ecphp/ecas/compare/4.0.2...4.0.3)
 
 ### Commits
 
+- chore: autofix code style [`a89cd70`](https://github.com/ecphp/ecas/commit/a89cd70fa2a1b6388ae1f7053981c1946bb32453)
+- chore: update default PHP version for development [`ed3a268`](https://github.com/ecphp/ecas/commit/ed3a2685a4f3a9fb9e856268dfe160402c7c4fa7)
+
+## [4.0.2](https://github.com/ecphp/ecas/compare/4.0.1...4.0.2) - 2024-01-30
+
+### Commits
+
+- docs: update changelog [`92398d6`](https://github.com/ecphp/ecas/commit/92398d6d72bc886b2dac8f78fadd6a15d96080a9)
 - chore: update license year [`1f7625e`](https://github.com/ecphp/ecas/commit/1f7625edc8330c1bd56de6e9fb2b98bcb3603a16)
 - tests: add new tests [`9dc73ee`](https://github.com/ecphp/ecas/commit/9dc73ee9eeed870658d81053db181afd65ef8be4)
 - fix: update precedence of parameters sent to ecphp/cas-lib [`c87e066`](https://github.com/ecphp/ecas/commit/c87e066bdfef6613ae337f1c824018a16b60dfe2)
