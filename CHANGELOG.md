@@ -5,10 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.3](https://github.com/ecphp/ecas/compare/4.0.2...4.0.3)
+## [4.0.4](https://github.com/ecphp/ecas/compare/4.0.3...4.0.4)
 
 ### Commits
 
+- chore: maintenance, minor fixes [`5a409f9`](https://github.com/ecphp/ecas/commit/5a409f909d8969d4beb632d030a827a668dfee2f)
+
+## [4.0.3](https://github.com/ecphp/ecas/compare/4.0.2...4.0.3) - 2024-10-08
+
+### Commits
+
+- chore: update changelog [`f4bdf06`](https://github.com/ecphp/ecas/commit/f4bdf064bce3ce9c67e2d41cf3f72697ede29af7)
 - chore: autofix code style [`a89cd70`](https://github.com/ecphp/ecas/commit/a89cd70fa2a1b6388ae1f7053981c1946bb32453)
 - chore: update default PHP version for development [`ed3a268`](https://github.com/ecphp/ecas/commit/ed3a2685a4f3a9fb9e856268dfe160402c7c4fa7)
 
