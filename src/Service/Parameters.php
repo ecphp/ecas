@@ -19,6 +19,7 @@ final class Parameters
 {
     public function addFingerprintFromCookie(ServerRequestInterface $request): array
     {
+        /** @var array $parameters */
         $parameters = $request->getAttribute('parameters', []);
 
         $clientFingerprintCookie = FigRequestCookies::get(
@@ -35,7 +36,9 @@ final class Parameters
 
     public function addFingerprintParameter(ServerRequestInterface $request): array
     {
+        /** @var array $parameters */
         $parameters = $request->getAttribute('parameters', []);
+        /** @var string $fingerprint */
         $fingerprint = $request->getAttribute(AttachClientFingerprintCookie::CLIENT_FINGERPRINT_ATTRIBUTE, '');
 
         $parameters[AttachClientFingerprintCookie::CLIENT_FINGERPRINT_ATTRIBUTE] = base64_encode(sha1(sha1($fingerprint, true), true));

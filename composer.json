@@ -7,8 +7,8 @@
         "php": ">= 8.1",
         "dflydev/fig-cookies": "^3",
         "ecphp/cas-lib": "^3",
-        "loophp/psr17": "^1.0.5",
-        "psr/http-client": "^1.0",
+        "loophp/psr17": "^1",
+        "psr/http-client": "^1",
         "psr/http-client-implementation": "^1"
     },
     "require-dev": {
@@ -20,8 +20,8 @@
         "nyholm/psr7": "^1.8",
         "phpspec/phpspec": "^7",
         "phpstan/phpstan-strict-rules": "^1.0",
-        "symfony/cache": "^6",
-        "symfony/http-client": "^6"
+        "symfony/cache": "^6.4 || ^7",
+        "symfony/http-client": "^6.4 || ^7"
     },
     "autoload": {
         "psr-4": {

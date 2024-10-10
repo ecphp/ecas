@@ -37,6 +37,7 @@ final class EcasProperties implements PropertiesInterface
 
     public function __construct(PropertiesInterface $casProperties)
     {
+        /** @var array $properties */
         $properties = $casProperties->jsonSerialize();
 
         $properties['protocol']['serviceValidate']['default_parameters']['format'] = 'JSON';

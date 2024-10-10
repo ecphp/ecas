@@ -15,6 +15,7 @@ use EcPhp\CasLib\Contract\CasInterface;
 use EcPhp\CasLib\Contract\Response\CasResponseBuilderInterface;
 use EcPhp\CasLib\Exception\CasHandlerException;
 use EcPhp\Ecas\Contract\Response\Type\LoginRequest;
+use EcPhp\Ecas\Contract\Response\Type\LoginRequestFailure;
 use EcPhp\Ecas\Exception\EcasHandlerException;
 use Ergebnis\Http\Method;
 use loophp\psr17\Psr17Interface;
@@ -88,11 +89,12 @@ final class LoginTransaction implements RequestHandlerInterface
             throw CasHandlerException::errorWhileDoingRequest($exception);
         }
 
+        /** @var LoginRequest|LoginRequestFailure $response */
         $response = $this
             ->casResponseBuilder
             ->fromResponse($response);
 
-        if (!$response instanceof LoginRequest) {
+        if ($response instanceof LoginRequestFailure) {
             throw EcasHandlerException::loginRequestFailure($response);
         }
 
